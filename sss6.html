@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ambedkar Bhavan Sangvi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f1f1f1;
+    }
+
+    .header {
+      background-color: #0d6efd;
+      color: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .rotating {
+      width: 150px;
+      height: 150px;
+      animation: rotate 5s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .content {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .footer {
+      background-color: #0d6efd;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      margin-top: 30px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    h1 {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🕉️ Ambedkar Bhavan Sangvi</h1>
+    <p>"Equality, Justice, Liberty"</p>
+  </div>
+
+  <!-- Rotating Logos -->
+  <div class="logo-container">
+    <!-- Ashoka Chakra -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Ashoka_Chakra.svg/800px-Ashoka_Chakra.svg.png" alt="Ashoka Chakra" class="rotating">
+
+    <!-- Ambedkar Photo -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Bhimrao_Ramji_Ambedkar.jpg" alt="Dr. B. R. Ambedkar" class="rotating">
+  </div>
+
+  <!-- Content Section -->
+  <div class="container content">
+    <h2>Welcome to Ambedkar Bhavan, Sangvi</h2>
+    <p>
+      This is a center for social justice, community unity, and the teachings of Dr. B. R. Ambedkar.
+      Our Bhavan organizes cultural, educational, and social awareness programs.
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2025 Ambedkar Bhavan Sangvi | Designed with ❤️ using HTML, Bootstrap, CSS</p>
+  </div>
+
+</body>
+</html>

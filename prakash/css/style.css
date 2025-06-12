@@ -1,0 +1,65 @@
+@font-face{
+  font-family: Montserrat;
+  src: url(../webfonts/Montserrat/Montserrat-Regular.ttf);
+}
+*, *::before, *::after{
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/********** Start header **********/
+.navbar-light, main{background: #6900d1;}
+.nav-link, .navbar-brand, .fa-bars, .banner, .text-muted, footer{color: #fff !important;}
+.navbar{padding: 15px;}
+.nav-item{margin: 0 20px 0 20px;}
+.nav-link{font-size: 15px !important;padding-left: 5px !important;border-bottom: 2px solid transparent;}
+.nav-link:hover{border-bottom: 2px solid #fff;}
+.fa-bars, .navbar-brand{font-size: 30px;}
+.navbar-toggler{border: 0 !important;outline: 0 !important;padding: initial;}
+/********** End header **********/
+
+/********** Start main **********/
+.banner{padding: 8% 0;}
+.banner h1{padding: 80px 0 50px;font-size: 50px;}
+.img-fluid{height: 360px;box-shadow: 0 5px 15px #000;}
+/********** End main **********/
+
+/********** Start services section **********/
+.services p{font-size: 15px;}
+
+.service-box{cursor: pointer;transition: .5s;}
+.service-box img{width:100%;height: 300px;}
+.service-box p{font-size:14px;color: #777;}
+.fa-arrow-right{font-size: 50px;transition: .5s;}
+.service-box.active{border-radius: 5px;box-shadow: 0 15px 15px 2px rgba(0,0,0,.5);}
+.service-box:hover{border-radius: 5px;box-shadow: 0 15px 15px 2px rgba(0,0,0,.5);}
+.service-box:hover .fa-arrow-right{transform: translateX(30px);}
+/********** End services section **********/
+
+/********** Start feature/explore sections **********/
+.feature img, .explore img{max-width:100%;border-radius: 10px;}
+.feature h2, .explore h2{line-height: 50px;}
+.feature button, .explore button{color: #6900d1;border: 1px solid #6900d1;box-shadow: 0 9px 9px 1px rgba(204,204,204,.5);}
+.feature button:hover, .explore button:hover{color: #fff;background:#6900d1;}
+.feature button.active{color: #fff;background:#6900d1;}
+/********** End feature/explore sections **********/
+
+/********** Start review section **********/
+.carousel-item{height: 430px;}
+.carousel-caption{z-index: -1 !important;padding-top:140px;height: 285px;border-radius: 5px;box-shadow: 0 0 15px 1px rgba(166,163,223,.5);}
+.carousel-item img{width: 200px;height: 200px;border-radius: 50%;}
+.carousel-caption h6, .carousel-caption small{color: #000;}
+.carousel-caption p{font-size: 15px;color: #808080;}
+.carousel-indicators li{background-color:#6900d1;}
+@media only screen and (max-width: 992px){
+  .carousel-caption{margin:0 10px 50px 10px;left:0;right:0;}
+}
+/********** End review section **********/
+
+/********** Start footer **********/
+footer{background:#6900d1;}
+footer .btn{background-color: #3300d1;}
+::placeholder{color: #efefef;font-size: 18px;}
+/********** End footer **********/
