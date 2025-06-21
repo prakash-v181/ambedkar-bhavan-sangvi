@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ambedkar Chairs | Ambedkar Bhavan Sangvi</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .chair-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .chair-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .fade-in {
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar {
+      background-color: #003366;
+    }
+
+    .navbar-brand, .nav-link {
+      color: #fff !important;
+    }
+
+    footer {
+      background-color: #003366;
+      color: white;
+      padding: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="index.html">Ambedkar Bhavan Sangvi</a>
+</nav>
+
+<header class="jumbotron text-center fade-in">
+  <h1 class="display-4">Dr. B. R. Ambedkar Chairs</h1>
+  <p class="lead">Academic and Community Contributions Inspired by Babasaheb</p>
+</header>
+
+<div class="container my-5">
+  <div class="row fade-in">
+    <div class="col-md-4">
+      <div class="card chair-card">
+        <img src="assets/images/bg/ambedkar7.jpg" class="card-img-top" alt="Ambedkar Chair 1">
+        <div class="card-body">
+          <h5 class="card-title">Social Justice Chair</h5>
+          <p class="card-text">Focusing on constitutional law, human rights, and equality studies in memory of Dr. Ambedkar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card chair-card">
+        <img src="assets/images/bg/ambedkar5.jpg" class="card-img-top" alt="Ambedkar Chair 2">
+        <div class="card-body">
+          <h5 class="card-title">Education Empowerment Chair</h5>
+          <p class="card-text">Promoting access to education for marginalized communities through research and outreach.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card chair-card">
+        <img src="assets/images/bg/ambedkar4.jpg" class="card-img-top" alt="Ambedkar Chair 3">
+        <div class="card-body">
+          <h5 class="card-title">Dalit Literature & History Chair</h5>
+          <p class="card-text">Preserving the intellectual legacy of Dalit thinkers, writers, and cultural leaders.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center">
+  <p>&copy; 2025 Ambedkar Bhavan Sangvi. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

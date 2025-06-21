@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ambedkar Bhavan Sangvi - Gallery</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .gallery-container {
+      padding: 30px 15px;
+    }
+
+    .card {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .custom-file-upload {
+      background-color: #0d6efd;
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container gallery-container">
+    <h1 class="text-center mb-4">📷 Ambedkar Bhavan Sangvi - Photo Gallery</h1>
+
+    <!-- Upload -->
+    <div class="text-center mb-4">
+      <label for="imageUpload" class="custom-file-upload">Upload Photo</label>
+      <input type="file" id="imageUpload" accept="image/*" />
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="row" id="galleryGrid">
+      <!-- Example image -->
+      <div class="col-md-4 mb-4">
+        <div class="card position-relative">
+          <button class="remove-btn" onclick="removeImage(this)">✖</button>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Dr._Bhimrao_Ambedkar.jpg/640px-Dr._Bhimrao_Ambedkar.jpg" class="card-img-top" alt="Ambedkar">
+          <div class="card-body">
+            <h5 class="card-title">Dr. B. R. Ambedkar</h5>
+            <p class="card-text">Architect of the Indian Constitution</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript for Image Upload/Delete -->
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const galleryGrid = document.getElementById('galleryGrid');
+
+    imageUpload.addEventListener('change', function() {
+      const files = this.files;
+
+      for (let file of files) {
+        if (!file.type.startsWith('image/')) continue;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const col = document.createElement('div');
+          col.className = 'col-md-4 mb-4';
+
+          col.innerHTML = `
+            <div class="card position-relative">
+              <button class="remove-btn" onclick="removeImage(this)">✖</button>
+              <img src="${e.target.result}" class="card-img-top" alt="Uploaded Photo">
+              <div class="card-body">
+                <h5 class="card-title">Uploaded Photo</h5>
+                <p class="card-text">Added just now</p>
+              </div>
+            </div>
+          `;
+
+          galleryGrid.prepend(col); // Newest images on top
+        };
+        reader.readAsDataURL(file);
+      }
+
+      this.value = ""; // reset input
+    });
+
+    function removeImage(button) {
+      const card = button.closest('.col-md-4');
+      card.remove();
+    }
+  </script>
+
+</body>
+</html>

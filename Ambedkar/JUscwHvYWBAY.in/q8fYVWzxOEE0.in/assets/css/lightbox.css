@@ -1,0 +1,175 @@
+
+#lightboxOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: #000000d1;
+  display: none;
+}
+
+
+#lightbox {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  text-align: center;
+  line-height: 0;
+  font-weight: normal;
+}
+
+#lightbox img {
+  width: auto;
+  height: auto;
+}
+
+#lightbox a img {
+  border: none;
+}
+
+
+.lb-outerContainer {
+  position: relative;
+  background-color:#141414;
+  *zoom: 1;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto; 
+  -moz-border-top-left-radius: 15px;
+-webkit-border-top-left-radius: 15px;
+border-radius:8px;
+	behavior: url(PIE.html); padding-bottom:50px;
+
+}
+
+.lb-outerContainer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+.lb-container {
+  padding: 10px;
+}
+
+
+.lb-loader {
+  position: absolute;
+  top: 40%;
+  left: 0%;
+  height: 25%;
+  width: 100%;
+  text-align: center;
+  line-height: 0;
+}
+
+.lb-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+   
+}
+
+
+.lb-container > .nav {
+  left: 0;
+}
+
+
+.lb-nav a {
+  outline: none;
+}
+
+
+.lb-prev, .lb-next {
+  width: 49%;
+  height: 100%;
+  background-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+
+  display: block;
+}
+
+.lb-prev {
+  left: 0;
+  float: left;
+}
+
+
+.lb-next {
+  right: 0;
+  float: right;
+}
+
+
+
+.lb-prev:hover {
+  background: url("../images/icons/prev.png") no-repeat scroll left 48% transparent;
+
+}
+
+
+.lb-next:hover {
+background: url("../images/icons/nxt.png") no-repeat scroll right 48% transparent;
+
+}
+
+
+
+
+.lb-dataContainer {
+  margin: 0 auto;
+  padding-top: 5px;
+  *zoom: 1;
+  width: 100%; position:relative; bottom: 50px;
+    z-index: 10000;
+    left: 5px;
+}
+
+.lb-dataContainer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+.lb-data {
+  padding: 0 10px;
+  color: #ffffff;
+}
+
+.lb-data .lb-details {
+  width: 85%;
+  float: left;
+  text-align: left;
+  line-height: 1.1em;
+}
+
+.lb-data .lb-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1em;
+}
+
+.lb-data .lb-number {
+  display: block;
+  clear: left;
+  padding-bottom: 1em;
+  font-size: 11px;
+}
+
+.lb-data .lb-close {
+  width: 50px;
+  float: right;
+  padding-bottom: 0.7em;
+  outline: none;
+}
+
+.lb-data .lb-close:hover {
+  cursor: pointer;
+}
