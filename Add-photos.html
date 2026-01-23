@@ -3,127 +3,276 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ambedkar Bhavan Sangvi - Gallery</title>
+  <title>Ambedkar Bhavan Sangvi – Photo Gallery</title>
+
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
+    /* ================= GLOBAL ================= */
     body {
-      background-color: #f8f9fa;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, #e3f2ff, transparent 40%),
+        radial-gradient(circle at bottom right, #dbeafe, transparent 40%),
+        linear-gradient(135deg, #eef5ff, #ffffff);
+      min-height: 100vh;
     }
 
-    .gallery-container {
-      padding: 30px 15px;
+    h1 {
+      font-weight: 700;
+      color: #0b3c91;
     }
 
-    .card {
-      animation: fadeIn 0.5s ease-in-out;
+    /* ================= TOP LINKS ================= */
+    .top-links a {
+      text-decoration: none;
+      color: #0b3c91;
+      font-weight: 600;
+      margin-right: 18px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .top-links a:hover {
+      text-decoration: underline;
     }
 
-    .remove-btn {
-      position: absolute;
-      top: 8px;
-      right: 12px;
-      background: red;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      font-size: 14px;
-      line-height: 20px;
+    /* ================= UPLOAD CARD ================= */
+    .upload-card {
+      background: linear-gradient(145deg, #ffffff, #eef5ff);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow:
+        0 25px 45px rgba(11,60,145,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+      max-width: 520px;
+      margin: auto;
+    }
+
+    /* ================= GALLERY CARD (3D) ================= */
+    .gallery-card {
+      position: relative;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0 20px 40px rgba(11,60,145,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-10px) rotateX(3deg);
+      box-shadow:
+        0 35px 70px rgba(11,60,145,0.28);
+    }
+
+    .gallery-card img {
+      height: 240px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .card-body {
       text-align: center;
-      cursor: pointer;
-      z-index: 1;
+      font-weight: 600;
+      color: #0b3c91;
     }
 
-    .custom-file-upload {
-      background-color: #0d6efd;
-      color: white;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-bottom: 20px;
+    .photo-time {
+      font-size: 0.85rem;
+      color: #555;
+      font-weight: normal;
     }
 
-    input[type="file"] {
-      display: none;
+    /* ================= BUTTONS ================= */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-outline-primary {
+      --bs-btn-color: #0b3c91;
+      --bs-btn-border-color: #0b3c91;
+      --bs-btn-hover-bg: #0b3c91;
+      --bs-btn-hover-border-color: #0b3c91;
+    }
+
+    .btn-outline-danger {
+      --bs-btn-hover-bg: #dc3545;
+    }
+
+    .btn-outline-success {
+      --bs-btn-hover-bg: #198754;
+    }
+
+    /* ================= ANIMATION ================= */
+    .fade-in {
+      animation: fadeInUp 0.6s ease both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="container gallery-container">
-    <h1 class="text-center mb-4">📷 Ambedkar Bhavan Sangvi - Photo Gallery</h1>
+<div class="container py-4">
 
-    <!-- Upload -->
-    <div class="text-center mb-4">
-      <label for="imageUpload" class="custom-file-upload">Upload Photo</label>
-      <input type="file" id="imageUpload" accept="image/*" />
+  <!-- Navigation -->
+  <div class="top-links mb-3">
+    <a href="https://prakash-v181.github.io/ambedkar-bhavan-sangvi/">Home</a>
+    <a href="https://prakash-v181.github.io/ambedkar-bhavan-sangvi/Ambedkar/JUscwHvYWBAY.in/index.html">
+      Back to Ambedkar Bhavan Sangvi
+    </a>
+  </div>
+
+  <h1 class="text-center mb-4">Ambedkar Bhavan Sangvi – Photo Gallery</h1>
+
+  <!-- Upload -->
+  <div class="upload-card mb-5">
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" id="nameInput" class="form-control" placeholder="Enter name">
     </div>
 
-    <!-- Gallery Grid -->
-    <div class="row" id="galleryGrid">
-      <!-- Example image -->
-      <div class="col-md-4 mb-4">
-        <div class="card position-relative">
-          <button class="remove-btn" onclick="removeImage(this)">✖</button>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Dr._Bhimrao_Ambedkar.jpg/640px-Dr._Bhimrao_Ambedkar.jpg" class="card-img-top" alt="Ambedkar">
-          <div class="card-body">
-            <h5 class="card-title">Dr. B. R. Ambedkar</h5>
-            <p class="card-text">Architect of the Indian Constitution</p>
-          </div>
-        </div>
-      </div>
+    <div class="mb-3">
+      <label class="form-label">Select Photo</label>
+      <input type="file" id="imageUpload" class="form-control" accept="image/*">
+    </div>
+
+    <div class="d-grid">
+      <button class="btn btn-primary" onclick="addPhoto()">Add Photo</button>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Gallery -->
+  <div class="row g-4" id="galleryGrid"></div>
+</div>
 
-  <!-- JavaScript for Image Upload/Delete -->
-  <script>
-    const imageUpload = document.getElementById('imageUpload');
-    const galleryGrid = document.getElementById('galleryGrid');
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    imageUpload.addEventListener('change', function() {
-      const files = this.files;
+<script>
+const nameInput = document.getElementById('nameInput');
+const imageUpload = document.getElementById('imageUpload');
+const galleryGrid = document.getElementById('galleryGrid');
 
-      for (let file of files) {
-        if (!file.type.startsWith('image/')) continue;
+let savedImages = JSON.parse(localStorage.getItem('galleryImages')) || [];
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const col = document.createElement('div');
-          col.className = 'col-md-4 mb-4';
+function formatDate(date) {
+  return date.toLocaleString('en-GB', {
+    day: '2-digit', month: 'short', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+}
 
-          col.innerHTML = `
-            <div class="card position-relative">
-              <button class="remove-btn" onclick="removeImage(this)">✖</button>
-              <img src="${e.target.result}" class="card-img-top" alt="Uploaded Photo">
-              <div class="card-body">
-                <h5 class="card-title">Uploaded Photo</h5>
-                <p class="card-text">Added just now</p>
-              </div>
-            </div>
-          `;
+function loadImages() {
+  galleryGrid.innerHTML = '';
 
-          galleryGrid.prepend(col); // Newest images on top
-        };
-        reader.readAsDataURL(file);
-      }
+  savedImages.forEach((img, index) => {
+    const col = document.createElement('div');
+    col.className = 'col-md-4 fade-in';
 
-      this.value = ""; // reset input
+    col.innerHTML = `
+      <div class="gallery-card p-2">
+        <img src="${img.src}">
+        <div class="card-body">
+          ${img.name}
+          <div class="photo-time">${img.time}</div>
+
+          <div class="action-buttons">
+            <button class="btn btn-sm btn-outline-primary" onclick="editName(${index})">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" onclick="removeImage(${index})">Delete</button>
+            <button class="btn btn-sm btn-outline-success" onclick="downloadImage('${img.src}')">Download</button>
+          </div>
+        </div>
+      </div>
+    `;
+    galleryGrid.appendChild(col);
+  });
+}
+
+loadImages();
+
+function compressImage(file, callback) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const maxWidth = 800;
+      const scale = Math.min(maxWidth / img.width, 1);
+
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      callback(canvas.toDataURL('image/jpeg', 0.7));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function addPhoto() {
+  const name = nameInput.value.trim();
+  const file = imageUpload.files[0];
+
+  if (!name) return alert('Please enter name');
+  if (!file) return alert('Please select photo');
+
+  compressImage(file, compressed => {
+    savedImages.unshift({
+      name: name,
+      src: compressed,
+      time: formatDate(new Date())
     });
+    localStorage.setItem('galleryImages', JSON.stringify(savedImages));
+    loadImages();
+  });
 
-    function removeImage(button) {
-      const card = button.closest('.col-md-4');
-      card.remove();
-    }
-  </script>
+  nameInput.value = '';
+  imageUpload.value = '';
+}
+
+function editName(index) {
+  const newName = prompt('Edit name:', savedImages[index].name);
+  if (!newName) return;
+
+  savedImages[index].name = newName;
+  localStorage.setItem('galleryImages', JSON.stringify(savedImages));
+  loadImages();
+}
+
+function removeImage(index) {
+  if (!confirm('Are you sure you want to delete this photo?')) return;
+
+  savedImages.splice(index, 1);
+  localStorage.setItem('galleryImages', JSON.stringify(savedImages));
+  loadImages();
+}
+
+function downloadImage(src) {
+  const a = document.createElement('a');
+  a.href = src;
+  a.download = 'photo.jpg';
+  a.click();
+}
+</script>
 
 </body>
 </html>
