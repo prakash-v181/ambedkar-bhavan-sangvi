@@ -143,7 +143,7 @@
   /* =======================
    GLOBAL
 ======================= */
-body {
+/* body {
   font-family: 'Segoe UI', system-ui, sans-serif;
   margin: 0;
   background: linear-gradient(
@@ -155,12 +155,51 @@ body {
   );
   background-attachment: fixed;
   perspective: 1400px;
+} */
+
+/* =========================
+   PREMIUM BODY BASE
+========================= */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Indian flag inspired layered background */
+  background:
+    radial-gradient(circle at top left, rgba(255,153,51,0.18), transparent 45%),
+    radial-gradient(circle at bottom right, rgba(19,136,8,0.18), transparent 45%),
+    linear-gradient(
+      180deg,
+      #ff9933 0%,
+      #ffffff 46%,
+      #ffffff 54%,
+      #138808 100%
+    );
+
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /* 3D depth base */
+  perspective: 1400px;
+
+  /* Rendering & performance */
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    scroll-behavior: auto;
+    background-attachment: scroll;
+  }
+}
+
 
 /* =======================
    HEADER
 ======================= */
-.header {
+/* .header {
   --rx: 0deg;
   --ry: 0deg;
 
@@ -175,7 +214,82 @@ body {
   transform-style: preserve-3d;
   transform: rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform 0.15s ease-out;
+} */
+
+
+/* =========================
+   PREMIUM HEADER
+========================= */
+.header {
+  /* 3D control variables */
+  --rx: 0deg;
+  --ry: 0deg;
+  --z: 0px;
+
+  position: relative;
+  padding: 100px 20px 150px;
+  text-align: center;
+
+  /* Indian flag gradient */
+  background: linear-gradient(
+    135deg,
+    #ff9933,
+    #ffffff,
+    #138808
+  );
+  background-size: 400% 400%;
+  animation: gradientMove 18s ease-in-out infinite;
+
+  overflow: hidden;
+
+  /* True 3D base */
+  transform-style: preserve-3d;
+  transform:
+    translateZ(var(--z))
+    rotateX(var(--rx))
+    rotateY(var(--ry));
+
+  /* Premium motion */
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease;
 }
+
+/* =========================
+   SOFT LIGHT LAYER
+========================= */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,0.45),
+      transparent 60%
+    );
+  opacity: 0.7;
+  pointer-events: none;
+  animation: lightMove 7s ease-in-out infinite;
+}
+
+/* =========================
+   DEPTH SHADOW (ON 3D)
+========================= */
+.header {
+  box-shadow:
+    inset 0 -1px 0 rgba(255,255,255,0.6);
+}
+
+/* =========================
+   OPTIONAL DESKTOP HINT
+========================= */
+@media (hover: hover) {
+  .header:hover {
+    --z: 14px;
+  }
+}
+
 
 .header::before {
   content: "";
@@ -232,32 +346,33 @@ body {
     } */
 
 
-    .chakra-logo {
+   .chakra-logo {
   width: 100px;
   display: block;
   margin: 20px auto;
 
-  /* 3D depth */
   transform: translateZ(60px);
-  filter: drop-shadow(0 10px 25px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.35));
 
-  /* Slow rotation */
-  animation: rotateChakra 30s linear infinite;
+  animation: chakraFloat 8s ease-in-out infinite,
+             rotateChakra 24s linear infinite;
 }
 
 @keyframes rotateChakra {
-  from {
-    transform: translateZ(60px) rotate(0deg);
-  }
-  to {
-    transform: translateZ(60px) rotate(360deg);
-  }
+  from { transform: translateZ(60px) rotate(0deg); }
+  to   { transform: translateZ(60px) rotate(360deg); }
 }
+
+@keyframes chakraFloat {
+  0%,100% { transform: translateZ(60px) translateY(0); }
+  50%     { transform: translateZ(60px) translateY(-8px); }
+}
+
 
 /* =======================
    CONTENT CARD
 ======================= */
-.content {
+/* .content {
   --rx: 0deg;
   --ry: 0deg;
 
@@ -276,24 +391,61 @@ body {
   box-shadow:
     0 35px 70px rgba(0,0,0,0.18),
     inset 0 1px 0 rgba(255,255,255,0.9);
+} */
+
+
+.content {
+  /* 3D control variables (used by JS if needed) */
+  --rx: 0deg;
+  --ry: 0deg;
+  --z: 0px;
+
+  padding: 80px 25px;
+  max-width: 1050px;
+  margin: -80px auto 0;
+  text-align: center;
+
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  border-radius: 26px;
+
+  /* 3D base */
+  transform-style: preserve-3d;
+  transform:
+    translateZ(var(--z))
+    rotateX(var(--rx))
+    rotateY(var(--ry));
+
+  /* Smooth premium motion */
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
+
+  /* Depth shadow */
+  box-shadow:
+    0 25px 55px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* =======================
    NAVBAR
 ======================= */
-.navbar {
+/* .navbar {
   transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .navbar.scrolled {
   background-color: rgba(0, 51, 102, 0.96) !important;
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-}
+} */
+
+
 
 /* =======================
    ANIMATIONS
 ======================= */
-@keyframes gradientMove {
+/* @keyframes gradientMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
@@ -302,6 +454,43 @@ body {
 @keyframes lightMove {
   0%,100% { opacity: 0.55; }
   50% { opacity: 1; }
+} */
+ 
+
+/* =========================
+   PREMIUM GRADIENT FLOW
+========================= */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 48%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 52%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* =========================
+   SOFT LIGHT BREATHING
+========================= */
+@keyframes lightMove {
+  0% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0.55;
+  }
 }
 
   </style>
@@ -336,10 +525,10 @@ body {
 
   <!-- Header -->
   <div class="header">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg" class="chakra-logo" alt="Ashoka Chakra"> <br/>
-    <div><h1>Ambedkar Bhavan Sangvi</h1>
-    <p>Unity | Equality | Progress</p></div>
-
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Ashoka_Chakra.svg" class="chakra-logo" alt="Ashoka Chakra"> 
+    <h1>Ambedkar Bhavan Sangvi</h1>
+    <p>Unity | Equality | Progress</p>
+  
   </div>
   
   
