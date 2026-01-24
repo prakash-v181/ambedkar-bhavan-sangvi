@@ -193,61 +193,6 @@
       background: linear-gradient(135deg, rgba(255,153,51,0.1), rgba(19,136,8,0.1));
     }
 
-
-
-/* ===== GALLERY SLIDER FIX ===== */
-
-.gallery {
-  background: #f8f9fa;
-  padding: 60px 0;
-}
-
-.slider {
-  overflow: hidden;
-  width: 100%;
-}
-
-.slider-track {
-  display: flex;
-  gap: 20px;
-  animation: scroll 40s linear infinite;
-}
-
-.slider-item {
-  min-width: 280px;
-  height: 200px;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #ddd;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-/* IMAGE FIX */
-.slider-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;      /* 👈 MOST IMPORTANT */
-  object-position: center;
-  display: block;
-}
-
-/* Auto scroll animation */
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* Mobile Fix */
-@media (max-width: 768px) {
-  .slider-item {
-    min-width: 220px;
-    height: 160px;
-  }
-}
-
-
-
-    
     .ambedkar-img {
       max-width: 350px;
       width: 100%;
@@ -443,6 +388,7 @@
       .footer-grid {
         grid-template-columns: 1fr;
       }
+
       /* ===== GALLERY SLIDER FIX ===== */
 
 .gallery {
@@ -624,54 +570,57 @@
 </div>
 
 
-<!--  -->
 
+  <!-- Gallery -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <h2 class="section-title">Babasaheb Dr. Ambedkar - Original Photos</h2>
+  </div>
+  <div class="slider">
+    <div class="slider-track">
+      <div class="slider-item"><img src="babashaheb/ambedkar1.jpg" alt="Photo 1"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar2.jpg" alt="Photo 2"></div>
+      <!-- <div class="slider-item"><img src="babashaheb/ambedkar3.jpeg" alt="Photo 3"></div> -->
+      <div class="slider-item"><img src="babashaheb/ambedkar4.jpg" alt="Photo 4"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar5.jpg" alt="Photo 5"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar6.png" alt="Photo 1"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar7.jpg" alt="Photo 2"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar8.jpg" alt="Photo 3"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar9.jpg" alt="Photo 4"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar10.jpg" alt="Photo 5"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar12.jpg" alt="Photo 5"></div>
 
-    <!-- Slider -->
-  <div class="container-fluid">
-    <div class="slider-container">
-      <div class="slider-track d-flex align-items-center">
-        <!-- Add as many images as needed -->
-        <img src="babashaheb/ambedkar1.jpg" alt="Statue">
-        <img src="babashaheb/ambedkar2.jpg" alt="Statue">
-        <img src="babashaheb/ambedkar3.jpeg" alt="Statue">
-        <img src="babashaheb/ambedkar4.jpg" alt="Memorial">
-        <img src="babashaheb/ambedkar5.jpg" alt="Dr. Ambedkar">
-        <img src="babashaheb/ambedkar6.png" alt="Portrait">
-        <img src="babashaheb/ambedkar7.jpg" alt="June 1948">
-        <!-- Repeat if needed for infinite loop effect -->
-        <img src="babashaheb/ambedkar8.jpg" alt="Statue Copy">
-        <img src="babashaheb/ambedkar10.jpg" alt="Memorial Copy">
-        <img src="babashaheb/ambedkar9.jpg" alt="Memorial Copy">
-        <img src="babashaheb/ambedkar12.jpg" alt="Memorial Copy">
-      </div>
     </div>
   </div>
 
-   <h2 class="title"> Ambedkar Bhavan Sangvi - Event Photos</h2>
 
-   <!-- Slider -->
-  <div class="container-fluid">
-    <div class="slider-container">
-      <div class="slider-track d-flex align-items-center">
-        <!-- Add as many images as needed -->
-        <img src="photos/prakash1.jpeg" alt="Statue">
-        <img src="photos/prakashs1.jpeg" alt="Statue">
-        <img src="photos/17.jpeg" alt="Statue">
-        <img src="photos/9.jpeg" alt="Memorial">
-        <img src="photos/7.jpg" alt="Dr. Ambedkar">
-        <img src="photos/school1.jpeg" alt="Portrait">
-        <img src="photos/prakash3.jpeg" alt="June 1948">
-        <!-- Repeat if needed for infinite loop effect -->
-        <img src="photos/milind.jpg" alt="Statue Copy">
-        <img src="photos/prakasshv9.jpg" alt="Memorial Copy">
-        <img src="photos/prakashmilind.jpg" alt="Memorial Copy">
-        <img src="photos/ambedkar hall.jpeg" alt="Memorial Copy">
-      </div>
+  <div class="container mt-5">
+    <h2 class="section-title">Ambedkar Bhavan Sangvi - Event Photos</h2>
+  </div>
+  <div class="slider">
+    <div class="slider-track">
+      
+
+
+
+      <div class="slider-item"><img src="photos/prakash1.jpeg" alt="Event 1"></div>
+      <!-- <div class="slider-item"><img src="photos/prakashs1.jpeg" alt="Event 2"></div>
+      <div class="slider-item"><img src="photos/17.jpeg" alt="Event 3"></div> -->
+      <div class="slider-item"><img src="photos/9.jpeg" alt="Event 4"></div>
+      <div class="slider-item"><img src="photos/7.jpg" alt="Event 5"></div>
+      <div class="slider-item"><img src="photos/school1.jpeg" alt="Event 1"></div>
+      <div class="slider-item"><img src="photos/prakash3.jpeg" alt="Event 2"></div>
+      <div class="slider-item"><img src="photos/milind.jpg" alt="Event 3"></div>
+      <div class="slider-item"><img src="photos/9.jpeg" alt="Event 4"></div>
+      <div class="slider-item"><img src="photos/prakash3.jpeg" alt="Event 5"></div>
+      <div class="slider-item"><img src="photos/prakasshv9.jpg" alt="Event 5"></div>
+      <div class="slider-item"><img src="photos/prakashmilind.jpg" alt="Event 5"></div>
+      <div class="slider-item"><img src="photos/ambedkar hall.jpeg" alt="Event 5"></div>
+
     </div>
   </div>
+</section>
 
-  
 <!-- CTA -->
 <section class="cta">
   <div class="container">
