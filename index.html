@@ -1002,5 +1002,979 @@ window.addEventListener("scroll",()=>st.classList.toggle("show",scrollY>300));
 st.onclick=()=>scrollTo({top:0,behavior:"smooth"});
 </script>
 
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Ambedkar Bhavan - AI Assistant</title>
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Sans Kannada', 'Noto Sans Devanagari', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+        }
+
+        /* Floating Button */
+        #ai-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: var(--shadow-2xl);
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        #ai-button:hover {
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        #ai-button i {
+            font-size: 30px;
+            color: white;
+        }
+
+        /* Chat Container */
+        #chat-container {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 420px;
+            height: 650px;
+            max-height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-2xl);
+            display: none;
+            flex-direction: column;
+            z-index: 9998;
+            overflow: hidden;
+            animation: slideUp 0.4s ease;
+            border: 1px solid var(--gray-200);
+        }
+
+        #chat-container.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Header */
+        .chat-header {
+            background: var(--gradient-primary);
+            padding: 20px;
+            color: white;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bot-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bot-avatar {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .bot-details h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .bot-status {
+            font-size: 13px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px;
+            border-radius: 12px;
+            margin-top: 12px;
+        }
+
+        .lang-btn {
+            padding: 6px 14px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Messages Area */
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, var(--gray-50), white);
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 75%;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-bubble {
+            background: var(--gradient-primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.assistant .message-bubble {
+            background: white;
+            color: var(--gray-800);
+            border: 1px solid var(--gray-200);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--gray-400);
+            margin-top: 4px;
+            padding: 0 4px;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 14px;
+            width: fit-content;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gray-400);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+
+        /* Rate Limit Warning */
+        .rate-limit-warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Suggestions */
+        .suggestions {
+            padding: 12px 16px;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            overflow-x: auto;
+        }
+
+        .suggestions-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .suggestion-chip {
+            padding: 8px 14px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--gray-700);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .suggestion-chip:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Input Area */
+        .chat-input {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .input-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #message-input {
+            width: 100%;
+            padding: 12px 45px 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--gray-800);
+            background: var(--gray-50);
+            resize: none;
+            max-height: 100px;
+            transition: all 0.2s;
+        }
+
+        #message-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .voice-btn {
+            position: absolute;
+            right: 10px;
+            bottom: 8px;
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .voice-btn:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .voice-btn.listening {
+            color: var(--danger);
+            animation: pulse-scale 1.5s infinite;
+        }
+
+        @keyframes pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #send-btn {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        #send-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        #send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            #chat-container {
+                width: 100%;
+                height: 100%;
+                max-height: 100vh;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            #ai-button {
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Button -->
+    <button id="ai-button" onclick="toggleChat()">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- Chat Container -->
+    <div id="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="bot-info">
+                    <div class="bot-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="bot-details">
+                        <h3>Ambedkar Bhavan AI</h3>
+                        <div class="bot-status">
+                            <span class="status-dot"></span>
+                            <span>Online • Sangvi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="toggleVoice()" id="voice-toggle" title="Toggle Voice">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <button class="header-btn" onclick="clearChat()" title="New Chat">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="header-btn" onclick="toggleChat()" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+                <button class="lang-btn" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+                <button class="lang-btn" onclick="setLanguage('hi')">हिंदी</button>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="chat-messages" id="messages">
+            <div class="message assistant">
+                <div class="message-content">
+                    <div class="message-bubble">
+                        <strong>Namaste! 🙏</strong><br>
+                        I am the AI assistant for Dr. Ambedkar Bhavan Sangvi. How can I help you today?
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Suggestions -->
+        <div class="suggestions">
+            <div class="suggestions-list" id="suggestions">
+                <div class="suggestion-chip" onclick="sendSuggestion('Tell me about Dr. Ambedkar Bhavan history')">
+                    History
+                </div>
+                <div class="suggestion-chip" onclick="sendSuggestion('What events are coming up?')">
+                    Events
+                </div>
+                <div class="suggestion-chip" onclick="sendSuggestion('Where is Sangvi located?')">
+                    Location
+                </div>
+                <div class="suggestion-chip" onclick="sendSuggestion('How can I contact you?')">
+                    Contact
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input">
+            <div class="input-wrapper">
+                <div class="input-container">
+                    <textarea 
+                        id="message-input" 
+                        rows="1" 
+                        placeholder="Type your message..."
+                        onkeydown="handleKeyPress(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <button class="voice-btn" id="voice-btn" onclick="startVoiceInput()" title="Voice input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+                <button id="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - CORRECT FORMAT FOR YOUR BACKEND
+        const CONFIG = {
+            apiUrl: 'https://ai-chatbotbackend-dszv.onrender.com/chat',
+            language: 'en',
+            voiceEnabled: true,
+            rateLimitDelay: 3000, // 3 seconds between messages
+            lastRequestTime: 0
+        };
+
+        // State
+        let recognition = null;
+        let synthesis = window.speechSynthesis;
+        let voices = [];
+
+        // Initialize
+        function init() {
+            console.log('🤖 Ambedkar Bhavan AI initialized');
+            
+            if (synthesis) {
+                loadVoices();
+                synthesis.onvoiceschanged = loadVoices;
+            }
+
+            setupSpeechRecognition();
+        }
+
+        // Toggle Chat
+        function toggleChat() {
+            const container = document.getElementById('chat-container');
+            container.classList.toggle('active');
+            if (container.classList.contains('active')) {
+                document.getElementById('message-input').focus();
+            }
+        }
+
+        // Send Message - CORRECTED TO MATCH YOUR BACKEND
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            // Check rate limit
+            const now = Date.now();
+            const timeSinceLastRequest = now - CONFIG.lastRequestTime;
+            
+            if (timeSinceLastRequest < CONFIG.rateLimitDelay) {
+                const waitTime = Math.ceil((CONFIG.rateLimitDelay - timeSinceLastRequest) / 1000);
+                showRateLimitWarning(waitTime);
+                return;
+            }
+
+            console.log('📤 Sending:', text);
+
+            // Add user message
+            addMessage(text, 'user');
+            input.value = '';
+            resetTextareaHeight();
+
+            // Show typing
+            const typingId = showTyping();
+
+            try {
+                CONFIG.lastRequestTime = Date.now();
+
+                // CORRECT FORMAT: Your backend expects "message" key
+                const response = await fetch(CONFIG.apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: text,  // ← CORRECT: Backend expects "message"
+                        language: CONFIG.language
+                    })
+                });
+
+                console.log('📥 Status:', response.status);
+
+                removeTyping(typingId);
+
+                if (response.status === 429) {
+                    // Rate limited
+                    const data = await response.json();
+                    showRateLimitWarning(3);
+                    addMessage('⏱️ ' + (data.reply || 'Please wait a few seconds before sending another message.'), 'assistant');
+                    return;
+                }
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.reply || `Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('✅ Response received');
+
+                // CORRECT: Backend returns "reply" key
+                const aiText = data.reply || data.text || data.response || data.message || 
+                              'Sorry, I did not receive a valid response.';
+
+                // Add AI message
+                addMessage(formatResponse(aiText), 'assistant', true);
+
+                // Speak
+                if (CONFIG.voiceEnabled) {
+                    speak(aiText);
+                }
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                removeTyping(typingId);
+                
+                addMessage(
+                    `⚠️ <strong>Error:</strong> ${error.message}<br><small>Please try again in a few seconds.</small>`, 
+                    'assistant', 
+                    true
+                );
+            }
+        }
+
+        // Show Rate Limit Warning
+        function showRateLimitWarning(seconds) {
+            const messagesDiv = document.getElementById('messages');
+            
+            // Remove any existing warning
+            const existingWarning = document.querySelector('.rate-limit-warning');
+            if (existingWarning) existingWarning.remove();
+
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'rate-limit-warning';
+            warningDiv.innerHTML = `
+                <i class="fas fa-clock"></i>
+                <span>Please wait ${seconds} seconds before sending another message.</span>
+            `;
+            
+            messagesDiv.appendChild(warningDiv);
+            scrollToBottom();
+
+            // Auto remove after delay
+            setTimeout(() => {
+                warningDiv.remove();
+            }, seconds * 1000);
+        }
+
+        // Add Message
+        function addMessage(text, sender, isHtml = false) {
+            const messagesDiv = document.getElementById('messages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            
+            if (isHtml) {
+                bubbleDiv.innerHTML = text;
+            } else {
+                bubbleDiv.textContent = text;
+            }
+
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+
+            contentDiv.appendChild(bubbleDiv);
+            contentDiv.appendChild(timeDiv);
+            messageDiv.appendChild(contentDiv);
+            messagesDiv.appendChild(messageDiv);
+
+            scrollToBottom();
+        }
+
+        // Show Typing
+        function showTyping() {
+            const id = 'typing-' + Date.now();
+            const messagesDiv = document.getElementById('messages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message assistant';
+            messageDiv.id = id;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+
+            contentDiv.appendChild(typingDiv);
+            messageDiv.appendChild(contentDiv);
+            messagesDiv.appendChild(messageDiv);
+
+            scrollToBottom();
+            return id;
+        }
+
+        // Remove Typing
+        function removeTyping(id) {
+            const element = document.getElementById(id);
+            if (element) element.remove();
+        }
+
+        // Format Response
+        function formatResponse(text) {
+            return text
+                .replace(/\n/g, '<br>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');
+        }
+
+        // Scroll to Bottom
+        function scrollToBottom() {
+            const messagesDiv = document.getElementById('messages');
+            setTimeout(() => {
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 100);
+        }
+
+        // Language Functions
+        function setLanguage(lang) {
+            CONFIG.language = lang;
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const placeholders = {
+                'en': 'Type your message...',
+                'kn': 'ನಿಮ್ಮ ಸಂದೇಶವನ್ನು ಟೈಪ್ ಮಾಡಿ...',
+                'hi': 'अपना संदेश टाइप करें...'
+            };
+            document.getElementById('message-input').placeholder = placeholders[lang];
+
+            updateSuggestions(lang);
+
+            if (recognition) {
+                recognition.lang = getLanguageCode(lang);
+            }
+        }
+
+        function updateSuggestions(lang) {
+            const suggestions = {
+                'en': [
+                    { text: 'Tell me about Dr. Ambedkar Bhavan history', label: 'History' },
+                    { text: 'What events are coming up?', label: 'Events' },
+                    { text: 'Where is Sangvi located?', label: 'Location' },
+                    { text: 'How can I contact you?', label: 'Contact' }
+                ],
+                'kn': [
+                    { text: 'ಡಾ. ಅಂಬೇಡ್ಕರ್ ಭವನದ ಇತಿಹಾಸ', label: 'ಇತಿಹಾಸ' },
+                    { text: 'ಮುಂದಿನ ಕಾರ್ಯಕ್ರಮಗಳು', label: 'ಕಾರ್ಯಕ್ರಮಗಳು' },
+                    { text: 'ಸಾಂಗವಿ ಎಲ್ಲಿದೆ?', label: 'ಸ್ಥಳ' },
+                    { text: 'ಸಂಪರ್ಕಿಸುವುದು ಹೇಗೆ?', label: 'ಸಂಪರ್ಕ' }
+                ],
+                'hi': [
+                    { text: 'डॉ. अंबेडकर भवन का इतिहास', label: 'इतिहास' },
+                    { text: 'आगामी कार्यक्रम', label: 'कार्यक्रम' },
+                    { text: 'सांगवी कहाँ है?', label: 'स्थान' },
+                    { text: 'संपर्क कैसे करें?', label: 'संपर्क' }
+                ]
+            };
+
+            const container = document.getElementById('suggestions');
+            const items = suggestions[lang] || suggestions['en'];
+            
+            container.innerHTML = items.map(item => 
+                `<div class="suggestion-chip" onclick="sendSuggestion('${item.text.replace(/'/g, "\\'")}')">${item.label}</div>`
+            ).join('');
+        }
+
+        function getLanguageCode(lang) {
+            const codes = { 'en': 'en-US', 'kn': 'kn-IN', 'hi': 'hi-IN' };
+            return codes[lang] || 'en-US';
+        }
+
+        function sendSuggestion(text) {
+            document.getElementById('message-input').value = text;
+            sendMessage();
+        }
+
+        // Voice Functions
+        function setupSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return;
+
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = getLanguageCode(CONFIG.language);
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('message-input').value = transcript;
+                document.getElementById('voice-btn').classList.remove('listening');
+                sendMessage();
+            };
+
+            recognition.onerror = () => {
+                document.getElementById('voice-btn').classList.remove('listening');
+            };
+
+            recognition.onend = () => {
+                document.getElementById('voice-btn').classList.remove('listening');
+            };
+        }
+
+        function startVoiceInput() {
+            if (!recognition) {
+                alert('Voice input not supported in your browser. Please use Chrome or Edge.');
+                return;
+            }
+
+            const btn = document.getElementById('voice-btn');
+            if (btn.classList.contains('listening')) {
+                recognition.stop();
+            } else {
+                btn.classList.add('listening');
+                recognition.start();
+            }
+        }
+
+        function loadVoices() {
+            voices = synthesis.getVoices();
+        }
+
+        function speak(text) {
+            if (!synthesis) return;
+            synthesis.cancel();
+
+            const cleanText = text.replace(/<[^>]*>/g, '').replace(/\*\*/g, '');
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = getLanguageCode(CONFIG.language);
+
+            const voice = voices.find(v => v.lang.startsWith(CONFIG.language)) || voices[0];
+            if (voice) utterance.voice = voice;
+
+            utterance.rate = 0.9;
+            synthesis.speak(utterance);
+        }
+
+        function toggleVoice() {
+            CONFIG.voiceEnabled = !CONFIG.voiceEnabled;
+            const icon = document.querySelector('#voice-toggle i');
+            icon.className = CONFIG.voiceEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+            if (!CONFIG.voiceEnabled) synthesis.cancel();
+        }
+
+        // Utility Functions
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+        }
+
+        function resetTextareaHeight() {
+            document.getElementById('message-input').style.height = 'auto';
+        }
+
+        function clearChat() {
+            if (confirm('Start a new chat?')) {
+                document.getElementById('messages').innerHTML = `
+                    <div class="message assistant">
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                <strong>Namaste! 🙏</strong><br>
+                                I am the AI assistant for Dr. Ambedkar Bhavan Sangvi. How can I help you today?
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>
 </body>
 </html>
