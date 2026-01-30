@@ -229,5 +229,537 @@ Or a shorter version:
             </div>
         </footer>
         <!---------- End footer ---------->
+
+
+
+        <!-- AI chatbot -->
+        
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dr. Ambedkar Bhavan - AI Assistant</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        :root {
+            /* --- THEME COLORS --- */
+            --ambedkar-blue: #6900d1;
+            --ambedkar-light: #6900d1;
+            --premium-gold: #fbbf24;
+            
+            /* --- UI VARIABLES --- */
+            --bg-body: #f0f2f5;
+            --chat-bg-glass: rgba(255, 255, 255, 0.98); /* Increased opacity for mobile readability */
+            --blur-strength: blur(16px);
+            --shadow-soft: 0 15px 50px -10px rgba(30, 60, 114, 0.4);
+            --text-dark: #1e293b;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --chat-bg-glass: rgba(15, 23, 42, 0.98);
+            --text-dark: #f1f5f9;
+            --shadow-soft: 0 15px 50px -10px rgba(0, 0, 0, 0.7);
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans Kannada', sans-serif;
+            background: var(--bg-body);
+            height: 100vh;
+            /* Prevent body scroll when chat is strictly full screen */
+            overflow-x: hidden;
+            transition: background 0.4s ease;
+        }
+
+        /* --- CHAT CARD (DESKTOP) --- */
+        #chat-card {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            width: 400px;
+            height: 650px;
+            max-height: 80vh;
+            background: var(--chat-bg-glass);
+            backdrop-filter: var(--blur-strength);
+            -webkit-backdrop-filter: var(--blur-strength);
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+            /* Transition setup */
+            transform: scale(0);
+            opacity: 0;
+            transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #chat-card.open {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* --- DRAGGABLE ICON --- */
+        #ai-trigger-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--ambedkar-blue), var(--ambedkar-light));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 9998; /* Lower than chat card so card covers it on mobile */
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            user-select: none;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        #ai-trigger-btn:active { transform: scale(0.90); }
+
+        /* HIDE BUTTON WHEN CHAT IS OPEN (Requires Button AFTER Card in HTML) */
+        #chat-card.open ~ #ai-trigger-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- MOBILE FULL SCREEN FIXES --- */
+        @media (max-width: 480px) {
+            #ai-trigger-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+            }
+
+            #chat-card {
+                /* STRICT FULL SCREEN positioning */
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100% !important;
+                height: 100dvh !important; /* Dynamic Viewport Height fixes URL bar issues */
+                max-height: none !important;
+                border-radius: 0 !important;
+                border: none;
+                margin: 0;
+                transform-origin: center center;
+            }
+        }
+
+        /* --- HEADER --- */
+        .chat-header {
+            background: linear-gradient(135deg, var(--ambedkar-blue) 0%, var(--ambedkar-light) 100%);
+            padding: 16px 20px;
+            color: white;
+            flex-shrink: 0; /* Prevents shrinking */
+        }
+
+        .h-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            margin-left: 6px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .h-btn:hover { background: var(--premium-gold); color: var(--ambedkar-blue); }
+        .h-btn.active-voice { background: white; color: var(--ambedkar-blue); box-shadow: 0 0 12px rgba(255,255,255,0.5); }
+
+        /* --- LANG TABS --- */
+        .lang-tabs {
+            display: flex;
+            background: rgba(0,0,0,0.2);
+            padding: 4px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+        .lang-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .lang-tab.active { background: white; color: var(--ambedkar-blue); }
+
+        /* --- CHAT BODY (SCROLL FIX) --- */
+        .chat-body {
+            flex: 1; /* Takes remaining height */
+            min-height: 0; /* Crucial for Flexbox scrolling */
+            padding: 20px;
+            overflow-y: auto; /* Enables scroll */
+            -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            scroll-behavior: smooth;
+            overscroll-behavior: contain; /* Prevents body scroll chaining */
+        }
+
+        .msg-row { display: flex; align-items: flex-end; gap: 8px; opacity: 0; animation: fadeUp 0.3s forwards; }
+        .msg-row.user { flex-direction: row-reverse; }
+
+        .msg-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.5;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .msg-row.bot .msg-bubble {
+            background: white;
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] .msg-row.bot .msg-bubble { background: #1e293b; border-color: rgba(255,255,255,0.1); }
+
+        .msg-row.user .msg-bubble {
+            background: linear-gradient(135deg, var(--ambedkar-blue), var(--ambedkar-light));
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-time { font-size: 10px; opacity: 0.7; margin-top: 4px; text-align: right; display: block; }
+
+        /* --- FOOTER --- */
+        .chat-footer {
+            padding: 15px;
+            background: rgba(255,255,255,0.6);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            flex-shrink: 0; /* Prevents shrinking */
+        }
+        [data-theme="dark"] .chat-footer { background: rgba(15, 23, 42, 0.6); }
+
+        .input-group-custom {
+            background: white;
+            border-radius: 24px;
+            padding: 6px;
+            display: flex;
+            align-items: flex-end;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+        }
+        [data-theme="dark"] .input-group-custom { background: #1e293b; }
+        
+        textarea {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px;
+            max-height: 120px;
+            resize: none;
+            outline: none;
+            color: var(--text-dark);
+            font-size: 15px;
+        }
+
+        .action-icon {
+            width: 44px; height: 44px; border-radius: 50%; border: none; background: transparent; color: #94a3b8; cursor: pointer; transition: 0.2s;
+        }
+        .action-icon:hover { background: #f1f5f9; color: var(--ambedkar-blue); }
+        .send-btn { background: var(--ambedkar-blue); color: white !important; margin-left: 6px; }
+        .send-btn:hover { background: var(--premium-gold); }
+
+        /* Animation */
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div id="chat-card">
+        <div class="chat-header">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width: 42px; height: 42px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div>
+                        <h5 class="m-0 fw-bold" style="font-size: 17px;">Ambedkar AI</h5>
+                        <small style="opacity: 0.9; font-size: 11px;">● Online • Sangvi</small>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <button class="h-btn" id="sound-btn" onclick="toggleSound()" title="Voice Output">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="h-btn" onclick="toggleTheme()" title="Dark Mode">
+                        <i class="fas fa-adjust"></i>
+                    </button>
+                    <button class="h-btn" onclick="toggleChat()" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="lang-tabs">
+                <button class="lang-tab active" onclick="setLanguage('en')">English</button>
+                <button class="lang-tab" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+                <button class="lang-tab" onclick="setLanguage('hi')">हिंदी</button>
+            </div>
+        </div>
+
+        <div class="chat-body" id="messages-area">
+            <div class="msg-row bot">
+                <div class="msg-bubble">
+                    <strong>Jai Bhim! 🙏</strong><br>
+                    Welcome to Dr. Ambedkar Bhavan AI Assistant. How can I help you?
+                    <span class="msg-time">Just now</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-footer">
+            <div class="input-group-custom">
+                <button class="action-icon" id="mic-btn" onclick="toggleMic()">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <textarea id="chat-input" rows="1" placeholder="Type your message..." oninput="autoResize(this)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault(); sendMessage();}"></textarea>
+                <button class="action-icon send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button id="ai-trigger-btn" onclick="toggleChat()">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <script>
+        /* --- CONFIGURATION --- */
+        const CONFIG = {
+            apiUrl: 'https://ai-chatbotbackend-dszv.onrender.com/chat',
+            lang: 'en',
+            sound: false
+        };
+
+        const els = {
+            btn: document.getElementById('ai-trigger-btn'),
+            card: document.getElementById('chat-card'),
+            msgs: document.getElementById('messages-area'),
+            input: document.getElementById('chat-input'),
+            micBtn: document.getElementById('mic-btn'),
+            soundBtn: document.getElementById('sound-btn')
+        };
+
+        let recognition;
+        let synth = window.speechSynthesis;
+
+        /* --- DRAG LOGIC (Works on Mobile & PC) --- */
+        function makeDraggable(element) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            let isDragging = false;
+            let hasMoved = false;
+
+            element.onmousedown = dragStart;
+            element.ontouchstart = dragStart;
+
+            function dragStart(e) {
+                // Don't drag if clicking the onclick directly
+                if (e.type === 'touchstart') {
+                   // mobile optimization
+                }
+                
+                e = e || window.event;
+                // Get initial pos
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.clientY || e.touches[0].clientY;
+                pos3 = clientX;
+                pos4 = clientY;
+                hasMoved = false;
+
+                document.onmouseup = dragEnd;
+                document.onmousemove = dragMove;
+                document.ontouchend = dragEnd;
+                document.ontouchmove = dragMove;
+            }
+
+            function dragMove(e) {
+                e = e || window.event;
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.clientY || e.touches[0].clientY;
+                
+                pos1 = pos3 - clientX;
+                pos2 = pos4 - clientY;
+                pos3 = clientX;
+                pos4 = clientY;
+
+                // Threshold to detect drag vs click
+                if (Math.abs(pos1) > 2 || Math.abs(pos2) > 2) { hasMoved = true; }
+
+                let newTop = (element.offsetTop - pos2);
+                let newLeft = (element.offsetLeft - pos1);
+
+                // Keep inside screen
+                const maxX = window.innerWidth - element.offsetWidth;
+                const maxY = window.innerHeight - element.offsetHeight;
+                
+                element.style.top = Math.max(0, Math.min(newTop, maxY)) + "px";
+                element.style.left = Math.max(0, Math.min(newLeft, maxX)) + "px";
+                element.style.bottom = 'auto'; 
+                element.style.right = 'auto';
+            }
+
+            function dragEnd() {
+                document.onmouseup = null; document.onmousemove = null;
+                document.ontouchend = null; document.ontouchmove = null;
+                // Note: The click event on the button handles the toggle, 
+                // so we don't need to manually call toggleChat here unless we preventDefault elsewhere.
+            }
+        }
+        makeDraggable(els.btn);
+
+        /* --- CHAT FUNCTIONS --- */
+        function toggleChat() {
+            els.card.classList.toggle('open');
+            if(els.card.classList.contains('open')) {
+                els.input.focus();
+                // Reset button position if needed or keep it hidden
+            }
+        }
+
+        function toggleTheme() {
+            const b = document.body;
+            b.setAttribute('data-theme', b.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+        }
+
+        function setLanguage(l) {
+            CONFIG.lang = l;
+            document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            els.input.placeholder = l === 'en' ? 'Type message...' : (l === 'kn' ? 'ಸಂದೇಶ ಟೈಪ್ ಮಾಡಿ...' : 'संदेश लिखें...');
+        }
+
+        function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+
+        /* --- MESSAGING --- */
+        async function sendMessage() {
+            const txt = els.input.value.trim();
+            if(!txt) return;
+
+            addMsg(txt, 'user');
+            els.input.value = '';
+            els.input.style.height = 'auto';
+            synth.cancel();
+
+            const loadId = showLoading();
+
+            try {
+                const res = await fetch(CONFIG.apiUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ message: txt, language: CONFIG.lang })
+                });
+                
+                document.getElementById(loadId).remove();
+                const data = await res.json();
+                const reply = data.reply || data.text || "Sorry, connection error.";
+                
+                addMsg(reply, 'bot');
+                if(CONFIG.sound) speak(reply);
+
+            } catch(e) {
+                if(document.getElementById(loadId)) document.getElementById(loadId).remove();
+                addMsg("⚠️ Server not responding. Please try again.", 'bot');
+            }
+        }
+
+        function addMsg(txt, type) {
+            const div = document.createElement('div');
+            div.className = `msg-row ${type}`;
+            const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            const content = type === 'bot' ? marked.parse(txt) : txt.replace(/\n/g, '<br>');
+            
+            div.innerHTML = `
+                <div class="msg-bubble">
+                    ${content}
+                    <span class="msg-time">${time}</span>
+                </div>`;
+            els.msgs.appendChild(div);
+            // Scroll to bottom
+            scrollToBottom();
+        }
+
+        function showLoading() {
+            const id = 'loader-' + Date.now();
+            els.msgs.innerHTML += `<div id="${id}" class="msg-row bot"><div class="msg-bubble"><i class="fas fa-circle-notch fa-spin"></i> ...</div></div>`;
+            scrollToBottom();
+            return id;
+        }
+
+        function scrollToBottom() {
+            els.msgs.scrollTop = els.msgs.scrollHeight;
+        }
+
+        /* --- AUDIO --- */
+        function toggleSound() {
+            CONFIG.sound = !CONFIG.sound;
+            const icon = els.soundBtn.querySelector('i');
+            if(CONFIG.sound) {
+                icon.className = 'fas fa-volume-up';
+                els.soundBtn.classList.add('active-voice');
+                speak(""); // Wake up mobile audio
+            } else {
+                icon.className = 'fas fa-volume-mute';
+                els.soundBtn.classList.remove('active-voice');
+                synth.cancel();
+            }
+        }
+
+        function speak(text) {
+            if(!window.speechSynthesis) return;
+            const clean = text.replace(/[*#_`]/g, '').replace(/<[^>]*>/g, '');
+            const utter = new SpeechSynthesisUtterance(clean);
+            const voices = synth.getVoices();
+            const langCode = CONFIG.lang === 'kn' ? 'kn-IN' : (CONFIG.lang === 'hi' ? 'hi-IN' : 'en-IN');
+            utter.voice = voices.find(v => v.lang.includes(langCode)) || voices[0];
+            synth.speak(utter);
+        }
+
+        function toggleMic() {
+            if(!window.webkitSpeechRecognition) { alert("Please use Chrome or Edge for voice input."); return; }
+            if(!recognition) {
+                recognition = new webkitSpeechRecognition();
+                recognition.continuous = false;
+                recognition.onstart = () => { els.micBtn.style.color = '#ef4444'; els.input.placeholder = "Listening..."; };
+                recognition.onend = () => { els.micBtn.style.color = ''; els.input.placeholder = "Type message..."; };
+                recognition.onresult = (e) => { els.input.value = e.results[0][0].transcript; sendMessage(); };
+            }
+            recognition.lang = CONFIG.lang === 'kn' ? 'kn-IN' : (CONFIG.lang === 'hi' ? 'hi-IN' : 'en-IN');
+            recognition.start();
+        }
+    </script>
+</body>
+</html>
     </body>
 </html>
