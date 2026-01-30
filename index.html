@@ -15,14 +15,29 @@
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Marked.js for Markdown -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <style>
 :root{
   --orange:#ff9933;
   --green:#138808;
   --blue:#0b3c91;
   --dark:#001a33;
+  --ambedkar-blue: #1e3c72;
+  --ambedkar-light: #2a5298;
+  --premium-gold: #fbbf24;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 body{
   font-family:'Poppins',sans-serif;
   background:linear-gradient(180deg,var(--orange),#fff,var(--green));
@@ -179,7 +194,8 @@ footer{
 /* SCROLL TOP */
 .scroll-top{
   position:fixed;
-  bottom:25px;right:25px;
+  bottom:25px;
+  right:25px;
   width:48px;height:48px;
   border-radius:50%;
   background:linear-gradient(135deg,var(--orange),var(--green));
@@ -191,438 +207,441 @@ footer{
 }
 .scroll-top.show{display:flex}
 
+.content-section {
+  background: rgba(255,255,255,0.95);
+  padding: 80px 20px;
+  border-radius: 40px 40px 0 0;
+  margin-top: -50px;
+  position: relative;
+  z-index: 10;
+}
 
-* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.tribute-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, rgba(255,153,51,0.1), rgba(19,136,8,0.1));
+}
 
-    :root {
-      --orange: #ff9933;
-      --green: #138808;
-      --blue: #003366;
-      --navy: #0b3c91;
-      --light-blue: #004aad;
-    }
+.ambedkar-img {
+  max-width: 350px;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: float 6s ease-in-out infinite;
+}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(180deg, #ff9933 0%, #ffffff 46%, #ffffff 54%, #138808 100%);
-      background-attachment: fixed;
-      overflow-x: hidden;
-    }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
 
-    .navbar {
-      background: rgba(0, 51, 102, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      padding: 1rem 0;
-    }
-
-    .navbar-brand {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff !important;
-    }
-
-    .nav-link {
-      color: #fff !important;
-      font-weight: 500;
-      margin: 0 0.5rem;
-      transition: all 0.3s;
-    }
-
-    .nav-link:hover {
-      color: #ff9933 !important;
-      transform: translateY(-2px);
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: linear-gradient(135deg, #ff9933, #ffffff, #138808);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      position: relative;
-      padding: 100px 20px 80px;
-    }
-
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background: #fff;
-      clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .chakra {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 2rem;
-      animation: rotate 20s linear infinite;
-      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 6vw, 4rem);
-      font-weight: 800;
-      color: #0b3c91;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .hero p {
-      font-size: clamp(1rem, 3vw, 1.5rem);
-      color: #222;
-      font-weight: 600;
-      letter-spacing: 2px;
-    }
-
-    .content-section {
-      background: rgba(255,255,255,0.95);
-      padding: 80px 20px;
-      border-radius: 40px 40px 0 0;
-      margin-top: -50px;
-      position: relative;
-      z-index: 10;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      color: #0b3c91;
-      text-align: center;
-      margin-bottom: 3rem;
-      position: relative;
-      padding-bottom: 1rem;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, #ff9933, #138808);
-      border-radius: 2px;
-    }
-
-    .card-modern {
-      background: #fff;
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      transition: all 0.4s ease;
-      height: 100%;
-      border-top: 4px solid transparent;
-    }
-
-    .card-modern:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      border-top-color: #ff9933;
-    }
-
-    .card-modern h5 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #004aad;
-      margin-bottom: 1rem;
-    }
-
-    .card-modern p {
-      color: #666;
-      line-height: 1.8;
-    }
-
-    .icon-box {
-      width: 60px;
-      height: 60px;
-      border-radius: 15px;
-      background: linear-gradient(135deg, #ff9933, #138808);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-    }
-
-    .tribute-section {
-      padding: 80px 20px;
-      background: linear-gradient(135deg, rgba(255,153,51,0.1), rgba(19,136,8,0.1));
-    }
-
-    .ambedkar-img {
-      max-width: 350px;
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .quote {
-      font-size: 1.3rem;
-      font-style: italic;
-      color: #0b3c91;
-      padding: 2rem;
-      background: rgba(255,255,255,0.9);
-      border-left: 4px solid #ff9933;
-      border-radius: 10px;
-      margin: 2rem 0;
-    }
-
-    .gallery {
-      padding: 80px 0;
-      background: #fff;
-      overflow: hidden;
-    }
-
-    .slider {
-      overflow: hidden;
-      padding: 40px 0;
-      position: relative;
-    }
-
-    .slider-track {
-      display: flex;
-      gap: 20px;
-      animation: slide 40s linear infinite;
-    }
-
-    .slider-track:hover {
-      animation-play-state: paused;
-    }
-
-    .slider-item {
-      min-width: 300px;
-      height: 200px;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
-      flex-shrink: 0;
-    }
-
-    .slider-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .slider-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    @keyframes slide {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .cta {
-      background: linear-gradient(135deg, #003366, #004aad);
-      padding: 80px 20px;
-      text-align: center;
-      color: #fff;
-    }
-
-    .cta h2 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 2rem;
-    }
-
-    .btn-cta {
-      background: #fff;
-      color: #003366;
-      padding: 1rem 3rem;
-      border-radius: 50px;
-      font-weight: 700;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    }
-
-    .btn-cta:hover {
-      background: #ff9933;
-      color: #fff;
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-
-    footer {
-      background: linear-gradient(135deg, #003366, #001a33);
-      color: #fff;
-      padding: 60px 20px 30px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-section h4 {
-      font-size: 1.3rem;
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-    }
-
-    .footer-section p,
-    .footer-section a {
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      line-height: 2;
-    }
-
-    .footer-section a:hover {
-      color: #ff9933;
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.6);
-    }
-
-    .scroll-top {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff9933, #138808);
-      color: #fff;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-      z-index: 1000;
-      font-size: 1.5rem;
-      transition: all 0.3s;
-    }
-
-    .scroll-top:hover {
-      transform: translateY(-5px);
-    }
-
-    .scroll-top.show {
-      display: flex;
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        min-height: 80vh;
-        padding: 80px 20px 60px;
-      }
-
-      .chakra {
-        width: 80px;
-        height: 80px;
-      }
-
-      .content-section {
-        padding: 60px 15px;
-      }
-
-      .card-modern {
-        padding: 1.5rem;
-      }
-
-      .slider-item {
-        min-width: 250px;
-        height: 180px;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      /* ===== GALLERY SLIDER FIX ===== */
+.quote {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #0b3c91;
+  padding: 2rem;
+  background: rgba(255,255,255,0.9);
+  border-left: 4px solid #ff9933;
+  border-radius: 10px;
+  margin: 2rem 0;
+}
 
 .gallery {
-  background: #f8f9fa;
-  padding: 60px 0;
+  padding: 80px 0;
+  background: #fff;
+  overflow: hidden;
 }
 
 .slider {
   overflow: hidden;
-  width: 100%;
+  padding: 40px 0;
+  position: relative;
 }
 
 .slider-track {
   display: flex;
   gap: 20px;
-  animation: scroll 40s linear infinite;
+  animation: slide 40s linear infinite;
+}
+
+.slider-track:hover {
+  animation-play-state: paused;
 }
 
 .slider-item {
-  min-width: 280px;
+  min-width: 300px;
   height: 200px;
-  border-radius: 14px;
+  border-radius: 15px;
   overflow: hidden;
-  background: #ddd;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+  flex-shrink: 0;
 }
 
-/* IMAGE FIX */
+.slider-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
 .slider-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* 👈 MOST IMPORTANT */
-  object-position: center;
-  display: block;
+  object-fit: cover;
 }
 
-/* Auto scroll animation */
-@keyframes scroll {
+@keyframes slide {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* Mobile Fix */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-section h4 {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.footer-section p,
+.footer-section a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  line-height: 2;
+}
+
+.footer-section a:hover {
+  color: #ff9933;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+}
+
+/* ===== AI CHATBOT STYLES ===== */
+
+/* Chatbot Theme Variables */
+.chatbot-container {
+  --chat-bg-body: #f0f2f5;
+  --chat-bg-glass: rgba(255, 255, 255, 0.95);
+  --chat-blur-strength: blur(16px);
+  --chat-shadow-soft: 0 15px 50px -10px rgba(30, 60, 114, 0.4);
+  --chat-text-dark: #1e293b;
+}
+
+.chatbot-container[data-theme="dark"] {
+  --chat-bg-body: #0f172a;
+  --chat-bg-glass: rgba(15, 23, 42, 0.95);
+  --chat-text-dark: #f1f5f9;
+  --chat-shadow-soft: 0 15px 50px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* --- DRAGGABLE ICON --- */
+#ai-trigger-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(135deg, var(--ambedkar-blue), var(--ambedkar-light));
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  font-size: 28px;
+  cursor: move;
+  z-index: 10000;
+  box-shadow: 0 8px 25px rgba(30, 60, 114, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+#ai-trigger-btn:active { transform: scale(0.90); }
+
+/* --- CHAT CARD (DESKTOP DEFAULT) --- */
+#chat-card {
+  position: fixed;
+  bottom: 110px;
+  right: 30px;
+  width: 420px;
+  height: 650px;
+  max-height: 85vh;
+  background: var(--chat-bg-glass);
+  backdrop-filter: var(--chat-blur-strength);
+  -webkit-backdrop-filter: var(--chat-blur-strength);
+  border-radius: 24px;
+  box-shadow: var(--chat-shadow-soft);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: bottom right;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#chat-card.open { 
+  transform: scale(1); 
+  opacity: 1; 
+}
+
+/* --- MOBILE RESPONSIVE OVERRIDES --- */
 @media (max-width: 768px) {
+  #ai-trigger-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+
+  /* FULL SCREEN ON MOBILE */
+  #chat-card {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100vh !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    border-radius: 0 !important;
+    border: none;
+    transform-origin: center;
+  }
+
+  /* Hide drag button when chat is open on mobile */
+  #chat-card.open ~ #ai-trigger-btn {
+    display: none;
+  }
+
   .slider-item {
     min-width: 220px;
     height: 160px;
   }
 }
 
+/* --- CHAT HEADER --- */
+.chat-header {
+  background: linear-gradient(135deg, var(--ambedkar-blue) 0%, var(--ambedkar-light) 100%);
+  padding: 16px 20px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.h-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  margin-left: 6px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all 0.3s;
+}
+.h-btn:hover { 
+  background: var(--premium-gold); 
+  color: var(--ambedkar-blue); 
+}
+.h-btn.active-voice { 
+  background: white; 
+  color: var(--ambedkar-blue); 
+  box-shadow: 0 0 12px rgba(255,255,255,0.5); 
+}
+
+/* --- LANG TABS --- */
+.lang-tabs {
+  display: flex;
+  background: rgba(0,0,0,0.2);
+  padding: 4px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+.lang-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.lang-tab.active { 
+  background: white; 
+  color: var(--ambedkar-blue); 
+}
+
+/* --- CHAT BODY --- */
+.chat-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar */
+.chat-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-body::-webkit-scrollbar-thumb {
+  background: rgba(30, 60, 114, 0.3);
+  border-radius: 10px;
+}
+
+.chat-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(30, 60, 114, 0.5);
+}
+
+.msg-row { 
+  display: flex; 
+  align-items: flex-end; 
+  gap: 8px; 
+  opacity: 0; 
+  animation: fadeUp 0.3s forwards; 
+}
+.msg-row.user { 
+  flex-direction: row-reverse; 
+}
+
+.msg-bubble {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  position: relative;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.msg-row.bot .msg-bubble {
+  background: white;
+  color: var(--chat-text-dark);
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.chatbot-container[data-theme="dark"] .msg-row.bot .msg-bubble { 
+  background: #1e293b; 
+  border-color: rgba(255,255,255,0.1); 
+}
+
+.msg-row.user .msg-bubble {
+  background: linear-gradient(135deg, var(--ambedkar-blue), var(--ambedkar-light));
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.msg-time { 
+  font-size: 10px; 
+  opacity: 0.7; 
+  margin-top: 4px; 
+  text-align: right; 
+  display: block; 
+}
+
+/* --- CHAT FOOTER --- */
+.chat-footer {
+  padding: 15px;
+  background: rgba(255,255,255,0.6);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  flex-shrink: 0;
+}
+
+.chatbot-container[data-theme="dark"] .chat-footer { 
+  background: rgba(15, 23, 42, 0.6); 
+}
+
+.input-group-custom {
+  background: white;
+  border-radius: 24px;
+  padding: 6px;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  border: 2px solid transparent;
+}
+
+.chatbot-container[data-theme="dark"] .input-group-custom { 
+  background: #1e293b; 
+}
+
+#chat-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px;
+  max-height: 120px;
+  resize: none;
+  outline: none;
+  color: var(--chat-text-dark);
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.action-icon {
+  width: 44px; 
+  height: 44px; 
+  border-radius: 50%; 
+  border: none; 
+  background: transparent; 
+  color: #94a3b8; 
+  cursor: pointer; 
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.action-icon:hover { 
+  background: #f1f5f9; 
+  color: var(--ambedkar-blue); 
+}
+.send-btn { 
+  background: var(--ambedkar-blue); 
+  color: white !important; 
+  margin-left: 6px; 
+}
+.send-btn:hover { 
+  background: var(--premium-gold); 
+}
+
+/* Animation */
+@keyframes fadeUp { 
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  } 
+}
 </style>
 </head>
 
@@ -636,12 +655,6 @@ footer{
 </div>
 
 <!-- NAVBAR -->
-<!-- <nav class="navbar navbar-expand-lg fixed-top">
-<div class="container">
-<a class="navbar-brand" href="#">Ambedkar Bhavan</a>
-</div>
-</nav> -->
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="https://prakash-v181.github.io/resume-prakash/">Prakash V</a>
@@ -650,7 +663,6 @@ footer{
     </button>
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav ms-auto">
-        <!-- <li class="nav-item"><a class="nav-link" href="#home">Home</a></li> -->
         <li class="nav-item"><a class="nav-link" href="prakash/index.html">About</a></li>
         <li class="nav-item"><a class="nav-link" href="./Ambedkar/JUscwHvYWBAY.in/index.html">Ambedkar Bhavan Sangvi</a></li>
         <li class="nav-item"><a class="nav-link" href="Add-photos.html">Add Photos</a></li>
@@ -731,8 +743,6 @@ footer{
   </div>
 </section>
 
-
-
 <!-- Tribute -->
 <section class="tribute-section">
   <div class="container">
@@ -783,6 +793,7 @@ footer{
     </div>
   </div>
 </section>
+
 <!-- Search Box -->
 <div class="search-container">
   <nav class="navbar bg-light rounded shadow">
@@ -794,9 +805,6 @@ footer{
     </div>
   </nav>
 </div>
-
-
-
 
 <!-- EVENTS CALENDAR -->
 <section class="section">
@@ -821,60 +829,42 @@ footer{
 </div>
 </section>
 
-
-
-  <!-- Gallery -->
+<!-- Gallery -->
 <section class="gallery" id="gallery">
   <div class="container">
     <h2 class="section-title">Babasaheb Dr. Ambedkar - Original Photos</h2>
   </div>
   <div class="slider">
     <div class="slider-track">
-      <!-- <div class="slider-item"><img src="babashaheb/ambedkar1.jpg" alt="Photo 1"></div>
-      <div class="slider-item"><img src="babashaheb/ambedkar2.jpg" alt="Photo 2"></div> -->
-      <!-- <div class="slider-item"><img src="babashaheb/ambedkar3.jpeg" alt="Photo 3"></div> -->
       <div class="slider-item"><img src="babashaheb/ambedkar4.jpg" alt="Photo 4"></div>
       <div class="slider-item"><img src="babashaheb/ambedkar5.jpg" alt="Photo 5"></div>
       <div class="slider-item"><img src="babashaheb/ambedkar6.png" alt="Photo 1"></div>
       <div class="slider-item"><img src="babashaheb/ambedkar7.jpg" alt="Photo 2"></div>
       <div class="slider-item"><img src="babashaheb/ambedkar4.jpg" alt="Photo 3"></div>
       <div class="slider-item"><img src="babashaheb/ambedkar5.jpg" alt="Photo 4"></div>
-       <div class="slider-item"><img src="babashaheb/ambedkar6.png" alt="Photo 1"></div>
-       <div class="slider-item"><img src="babashaheb/ambedkar7.jpg" alt="Photo 2"></div>
-      <!-- <div class="slider-item"><img src="babashaheb/ambedkar10.jpg" alt="Photo 5"></div>
-      <div class="slider-item"><img src="babashaheb/ambedkar12.jpg" alt="Photo 5"></div> -->
-
+      <div class="slider-item"><img src="babashaheb/ambedkar6.png" alt="Photo 1"></div>
+      <div class="slider-item"><img src="babashaheb/ambedkar7.jpg" alt="Photo 2"></div>
     </div>
   </div>
-
 
   <div class="container mt-5">
     <h2 class="section-title">Ambedkar Bhavan Sangvi - Event Photos</h2>
   </div>
   <div class="slider">
     <div class="slider-track">
-      
-
-
-
       <div class="slider-item"><img src="photos/prakash1.jpeg" alt="Event 1"></div>
-      <!-- <div class="slider-item"><img src="photos/prakashs1.jpeg" alt="Event 2"></div>
-      <div class="slider-item"><img src="photos/17.jpeg" alt="Event 3"></div> -->
       <div class="slider-item"><img src="photos/9.jpeg" alt="Event 4"></div>
       <div class="slider-item"><img src="photos/7.jpg" alt="Event 5"></div>
       <div class="slider-item"><img src="photos/school1.jpeg" alt="Event 1"></div>
       <div class="slider-item"><img src="photos/prakash3.jpeg" alt="Event 2"></div>
-      <!-- <div class="slider-item"><img src="photos/milind.jpg" alt="Event 3"></div> -->
       <div class="slider-item"><img src="photos/9.jpeg" alt="Event 4"></div>
       <div class="slider-item"><img src="photos/prakash3.jpeg" alt="Event 5"></div>
       <div class="slider-item"><img src="photos/prakasshv9.jpg" alt="Event 5"></div>
       <div class="slider-item"><img src="photos/prakashmilind.jpg" alt="Event 5"></div>
       <div class="slider-item"><img src="photos/ambedkar hall.jpeg" alt="Event 5"></div>
-
     </div>
   </div>
 </section>
-
 
 <!-- CTA -->
 <section class="cta">
@@ -916,6 +906,70 @@ footer{
 
 <div class="scroll-top" id="scrollTop">↑</div>
 
+<!-- AI CHATBOT -->
+<div class="chatbot-container" data-theme="light">
+  <button id="ai-trigger-btn">
+    <i class="fas fa-robot"></i>
+  </button>
+
+  <div id="chat-card">
+    <div class="chat-header">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="d-flex align-items-center gap-3">
+          <div style="width: 42px; height: 42px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            <i class="fas fa-landmark"></i>
+          </div>
+          <div>
+            <h5 class="m-0 fw-bold" style="font-size: 17px;">Ambedkar AI</h5>
+            <small style="opacity: 0.9; font-size: 11px;">● Online • Sangvi</small>
+          </div>
+        </div>
+        <div class="d-flex">
+          <button class="h-btn" id="sound-btn" onclick="toggleSound()" title="Voice Output">
+            <i class="fas fa-volume-mute"></i>
+          </button>
+          <button class="h-btn" onclick="toggleChatTheme()" title="Dark Mode">
+            <i class="fas fa-adjust"></i>
+          </button>
+          <button class="h-btn" onclick="toggleChat()" title="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="lang-tabs">
+        <button class="lang-tab active" onclick="setLanguage('en')">English</button>
+        <button class="lang-tab" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
+        <button class="lang-tab" onclick="setLanguage('hi')">हिंदी</button>
+      </div>
+    </div>
+
+    <div class="chat-body" id="messages-area">
+      <div class="msg-row bot">
+        <div class="msg-bubble">
+          <strong>Jai Bhim! 🙏</strong><br>
+          Welcome to Dr. Ambedkar Bhavan AI Assistant. How can I help you?
+          <span class="msg-time">Just now</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-footer">
+      <div class="input-group-custom">
+        <button class="action-icon" id="mic-btn" onclick="toggleMic()">
+          <i class="fas fa-microphone"></i>
+        </button>
+        <textarea id="chat-input" rows="1" placeholder="Type your message..." oninput="autoResize(this)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault(); sendMessage();}"></textarea>
+        <button class="action-icon send-btn" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 /* LANGUAGE DATA */
 const langData={
@@ -955,42 +1009,40 @@ footer:"© 2025 अंबेडकर भवन सांगवी"
 };
 
 function setLang(l){
-titleText.innerText=langData[l].title;
-tagline.innerText=langData[l].tag;
-aboutTitle.innerText=langData[l].about;
-m1.innerText=langData[l].m1;
-m2.innerText=langData[l].m2;
-m3.innerText=langData[l].m3;
-eventTitle.innerText=langData[l].events;
-ctaText.innerText=langData[l].cta;
-footerText.innerText=langData[l].footer;
+  titleText.innerText=langData[l].title;
+  tagline.innerText=langData[l].tag;
+  aboutTitle.innerText=langData[l].about;
+  m1.innerText=langData[l].m1;
+  m2.innerText=langData[l].m2;
+  m3.innerText=langData[l].m3;
+  eventTitle.innerText=langData[l].events;
 }
 
 /* CALENDAR */
 const events={
-"2026-01-26":"Republic Day",
-"2026-04-14":"Ambedkar Jayanti",
-"2026-08-15":"Independence Day"
+  "2026-01-26":"Republic Day",
+  "2026-04-14":"Ambedkar Jayanti",
+  "2026-08-15":"Independence Day"
 };
 let currentDate=new Date();
 
 function renderCalendar(){
-const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const year=currentDate.getFullYear();
-const month=currentDate.getMonth();
-calMonth.innerText=months[month]+" "+year;
-const firstDay=new Date(year,month,1).getDay();
-const daysInMonth=new Date(year,month+1,0).getDate();
-let html="<tr>";
-for(let i=0;i<firstDay;i++) html+="<td></td>";
-for(let d=1;d<=daysInMonth;d++){
-const key=`${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-let cls=events[key]?"event-day":"";
-if(d===new Date().getDate()&&month===new Date().getMonth()&&year===new Date().getFullYear())cls+=" today";
-html+=`<td class="${cls}">${d}</td>`;
-if((d+firstDay)%7===0) html+="</tr><tr>";
-}
-calendarBody.innerHTML=html+"</tr>";
+  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const year=currentDate.getFullYear();
+  const month=currentDate.getMonth();
+  calMonth.innerText=months[month]+" "+year;
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  let html="<tr>";
+  for(let i=0;i<firstDay;i++) html+="<td></td>";
+  for(let d=1;d<=daysInMonth;d++){
+    const key=`${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    let cls=events[key]?"event-day":"";
+    if(d===new Date().getDate()&&month===new Date().getMonth()&&year===new Date().getFullYear())cls+=" today";
+    html+=`<td class="${cls}">${d}</td>`;
+    if((d+firstDay)%7===0) html+="</tr><tr>";
+  }
+  calendarBody.innerHTML=html+"</tr>";
 }
 function prevMonth(){currentDate.setMonth(currentDate.getMonth()-1);renderCalendar()}
 function nextMonth(){currentDate.setMonth(currentDate.getMonth()+1);renderCalendar()}
@@ -1000,521 +1052,260 @@ renderCalendar();
 const st=document.getElementById("scrollTop");
 window.addEventListener("scroll",()=>st.classList.toggle("show",scrollY>300));
 st.onclick=()=>scrollTo({top:0,behavior:"smooth"});
+
+/* ===== AI CHATBOT JAVASCRIPT ===== */
+
+/* --- CONFIGURATION --- */
+const CONFIG = {
+  apiUrl: 'https://ai-chatbotbackend-dszv.onrender.com/chat',
+  lang: 'en',
+  sound: false
+};
+
+const els = {
+  btn: document.getElementById('ai-trigger-btn'),
+  card: document.getElementById('chat-card'),
+  msgs: document.getElementById('messages-area'),
+  input: document.getElementById('chat-input'),
+  micBtn: document.getElementById('mic-btn'),
+  soundBtn: document.getElementById('sound-btn'),
+  container: document.querySelector('.chatbot-container')
+};
+
+let recognition;
+let synth = window.speechSynthesis;
+
+/* --- DRAG LOGIC (Works on Mobile & PC) --- */
+function makeDraggable(element) {
+  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  let hasMoved = false;
+
+  element.onmousedown = dragStart;
+  element.ontouchstart = dragStart;
+
+  function dragStart(e) {
+    e = e || window.event;
+    e.preventDefault();
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+    pos3 = clientX;
+    pos4 = clientY;
+    hasMoved = false;
+
+    document.onmouseup = dragEnd;
+    document.onmousemove = dragMove;
+    document.ontouchend = dragEnd;
+    document.ontouchmove = dragMove;
+  }
+
+  function dragMove(e) {
+    e = e || window.event;
+    e.preventDefault();
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+    
+    pos1 = pos3 - clientX;
+    pos2 = pos4 - clientY;
+    pos3 = clientX;
+    pos4 = clientY;
+
+    if (Math.abs(pos1) > 2 || Math.abs(pos2) > 2) { 
+      hasMoved = true; 
+    }
+
+    let newTop = (element.offsetTop - pos2);
+    let newLeft = (element.offsetLeft - pos1);
+
+    const maxX = window.innerWidth - element.offsetWidth;
+    const maxY = window.innerHeight - element.offsetHeight;
+    
+    element.style.top = Math.max(0, Math.min(newTop, maxY)) + "px";
+    element.style.left = Math.max(0, Math.min(newLeft, maxX)) + "px";
+    element.style.bottom = 'auto'; 
+    element.style.right = 'auto';
+  }
+
+  function dragEnd() {
+    document.onmouseup = null; 
+    document.onmousemove = null;
+    document.ontouchend = null; 
+    document.ontouchmove = null;
+    if (!hasMoved) toggleChat();
+  }
+}
+makeDraggable(els.btn);
+
+/* --- CHAT FUNCTIONS --- */
+function toggleChat() {
+  els.card.classList.toggle('open');
+  if(els.card.classList.contains('open')) {
+    els.input.focus();
+    // Scroll to bottom when opening
+    setTimeout(() => {
+      els.msgs.scrollTop = els.msgs.scrollHeight;
+    }, 100);
+  }
+}
+
+function toggleChatTheme() {
+  const currentTheme = els.container.getAttribute('data-theme');
+  els.container.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+}
+
+function setLanguage(l) {
+  CONFIG.lang = l;
+  document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  els.input.placeholder = l === 'en' ? 'Type message...' : (l === 'kn' ? 'ಸಂದೇಶ ಟೈಪ್ ಮಾಡಿ...' : 'संदेश लिखें...');
+}
+
+function autoResize(el) { 
+  el.style.height = 'auto'; 
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px'; 
+}
+
+/* --- MESSAGING --- */
+async function sendMessage() {
+  const txt = els.input.value.trim();
+  if(!txt) return;
+
+  addMsg(txt, 'user');
+  els.input.value = '';
+  els.input.style.height = 'auto';
+  synth.cancel();
+
+  const loadId = showLoading();
+
+  try {
+    const res = await fetch(CONFIG.apiUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ message: txt, language: CONFIG.lang })
+    });
+    
+    const loadEl = document.getElementById(loadId);
+    if(loadEl) loadEl.remove();
+    
+    const data = await res.json();
+    const reply = data.reply || data.text || "Sorry, connection error.";
+    
+    addMsg(reply, 'bot');
+    if(CONFIG.sound) speak(reply);
+
+  } catch(e) {
+    const loadEl = document.getElementById(loadId);
+    if(loadEl) loadEl.remove();
+    addMsg("⚠️ Server not responding. Please try again.", 'bot');
+  }
+}
+
+function addMsg(txt, type) {
+  const div = document.createElement('div');
+  div.className = `msg-row ${type}`;
+  const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  const content = type === 'bot' ? (marked ? marked.parse(txt) : txt) : txt.replace(/\n/g, '<br>');
+  
+  div.innerHTML = `
+    <div class="msg-bubble">
+      ${content}
+      <span class="msg-time">${time}</span>
+    </div>`;
+  els.msgs.appendChild(div);
+  
+  // Smooth scroll to bottom
+  setTimeout(() => {
+    els.msgs.scrollTop = els.msgs.scrollHeight;
+  }, 50);
+}
+
+function showLoading() {
+  const id = 'loader-' + Date.now();
+  els.msgs.innerHTML += `<div id="${id}" class="msg-row bot"><div class="msg-bubble"><i class="fas fa-circle-notch fa-spin"></i> Thinking...</div></div>`;
+  els.msgs.scrollTop = els.msgs.scrollHeight;
+  return id;
+}
+
+/* --- AUDIO --- */
+function toggleSound() {
+  CONFIG.sound = !CONFIG.sound;
+  const icon = els.soundBtn.querySelector('i');
+  if(CONFIG.sound) {
+    icon.className = 'fas fa-volume-up';
+    els.soundBtn.classList.add('active-voice');
+    // Test audio on mobile
+    if(synth) {
+      const test = new SpeechSynthesisUtterance("");
+      synth.speak(test);
+    }
+  } else {
+    icon.className = 'fas fa-volume-mute';
+    els.soundBtn.classList.remove('active-voice');
+    synth.cancel();
+  }
+}
+
+function speak(text) {
+  if(!window.speechSynthesis) return;
+  synth.cancel();
+  
+  const clean = text.replace(/[*#_`]/g, '').replace(/<[^>]*>/g, '');
+  const utter = new SpeechSynthesisUtterance(clean);
+  const voices = synth.getVoices();
+  const langCode = CONFIG.lang === 'kn' ? 'kn-IN' : (CONFIG.lang === 'hi' ? 'hi-IN' : 'en-IN');
+  utter.voice = voices.find(v => v.lang.includes(langCode)) || voices[0];
+  utter.rate = 0.9;
+  synth.speak(utter);
+}
+
+function toggleMic() {
+  if(!window.webkitSpeechRecognition && !window.SpeechRecognition) { 
+    alert("Voice input not supported in this browser. Please use Chrome or Edge."); 
+    return; 
+  }
+  
+  if(!recognition) {
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    
+    recognition.onstart = () => { 
+      els.micBtn.style.color = '#ef4444'; 
+      els.input.placeholder = "Listening..."; 
+    };
+    
+    recognition.onend = () => { 
+      els.micBtn.style.color = ''; 
+      els.input.placeholder = "Type message..."; 
+    };
+    
+    recognition.onresult = (e) => { 
+      els.input.value = e.results[0][0].transcript; 
+      autoResize(els.input);
+      sendMessage(); 
+    };
+    
+    recognition.onerror = (e) => {
+      console.error('Speech recognition error:', e.error);
+      els.micBtn.style.color = ''; 
+      els.input.placeholder = "Type message...";
+    };
+  }
+  
+  recognition.lang = CONFIG.lang === 'kn' ? 'kn-IN' : (CONFIG.lang === 'hi' ? 'hi-IN' : 'en-IN');
+  try {
+    recognition.start();
+  } catch(e) {
+    console.error('Could not start recognition:', e);
+  }
+}
+
+// Initialize speech synthesis voices
+if(window.speechSynthesis) {
+  speechSynthesis.onvoiceschanged = () => {
+    speechSynthesis.getVoices();
+  };
+}
 </script>
 
-
-
-
-
-
-  <!-- AI chatbot -->
-
-
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dr. Ambedkar Bhavan - AI Assistant</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+Kannada:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <style>
-        :root {
-            /* --- THEME COLORS --- */
-            --ambedkar-blue: #1e3c72;
-            --ambedkar-light: #2a5298;
-            --premium-gold: #fbbf24;
-            
-            /* --- UI VARIABLES --- */
-            --bg-body: #f0f2f5;
-            --chat-bg-glass: rgba(255, 255, 255, 0.95);
-            --blur-strength: blur(16px);
-            --shadow-soft: 0 15px 50px -10px rgba(30, 60, 114, 0.4);
-            --text-dark: #1e293b;
-        }
-
-        [data-theme="dark"] {
-            --bg-body: #0f172a;
-            --chat-bg-glass: rgba(15, 23, 42, 0.95);
-            --text-dark: #f1f5f9;
-            --shadow-soft: 0 15px 50px -10px rgba(0, 0, 0, 0.7);
-        }
-
-        body {
-            font-family: 'Outfit', 'Noto Sans Kannada', sans-serif;
-            background: var(--bg-body);
-            background-image: radial-gradient(circle at 10% 20%, rgba(30, 60, 114, 0.05) 0%, transparent 20%),
-                              radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 20%);
-            height: 100vh;
-            overflow: hidden;
-            transition: background 0.4s ease;
-        }
-
-        /* --- DRAGGABLE ICON --- */
-        #ai-trigger-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, var(--ambedkar-blue), var(--ambedkar-light));
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            color: white;
-            font-size: 28px;
-            cursor: move;
-            z-index: 10000;
-            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: none;
-            user-select: none;
-            transition: transform 0.2s;
-        }
-
-        #ai-trigger-btn:active { transform: scale(0.90); }
-        #ai-trigger-btn.hide-on-mobile { opacity: 0; pointer-events: none; }
-
-        /* --- CHAT CARD (DESKTOP DEFAULT) --- */
-        #chat-card {
-            position: fixed;
-            bottom: 110px; /* Above the button */
-            right: 30px;
-            width: 400px;  /* FIXED WIDTH FOR PC */
-            height: 650px; /* FIXED HEIGHT FOR PC */
-            max-height: 80vh;
-            background: var(--chat-bg-glass);
-            backdrop-filter: var(--blur-strength);
-            -webkit-backdrop-filter: var(--blur-strength);
-            border-radius: 24px;
-            box-shadow: var(--shadow-soft);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 9999;
-            transform: scale(0);
-            opacity: 0;
-            transform-origin: bottom right;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #chat-card.open { transform: scale(1); opacity: 1; }
-
-        /* --- MOBILE RESPONSIVE OVERRIDES --- */
-        @media (max-width: 480px) {
-            #ai-trigger-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 60px;
-                height: 60px;
-            }
-
-            /* FULL SCREEN ON MOBILE */
-            #chat-card {
-                width: 100% !important;
-                height: 100% !important;
-                max-height: 100vh !important;
-                bottom: 0 !important;
-                right: 0 !important;
-                border-radius: 0 !important;
-                border: none;
-            }
-
-            /* Hide drag button when chat is open on mobile */
-            #chat-card.open ~ #ai-trigger-btn {
-                display: none;
-            }
-        }
-
-        /* --- HEADER --- */
-        .chat-header {
-            background: linear-gradient(135deg, var(--ambedkar-blue) 0%, var(--ambedkar-light) 100%);
-            padding: 16px 20px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .h-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            margin-left: 6px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .h-btn:hover { background: var(--premium-gold); color: var(--ambedkar-blue); }
-        .h-btn.active-voice { background: white; color: var(--ambedkar-blue); box-shadow: 0 0 12px rgba(255,255,255,0.5); }
-
-        /* --- LANG TABS --- */
-        .lang-tabs {
-            display: flex;
-            background: rgba(0,0,0,0.2);
-            padding: 4px;
-            border-radius: 12px;
-            margin-top: 10px;
-        }
-        .lang-tab {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
-            font-weight: 600;
-            padding: 6px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .lang-tab.active { background: white; color: var(--ambedkar-blue); }
-
-        /* --- CHAT BODY --- */
-        .chat-body {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            scroll-behavior: smooth;
-        }
-
-        .msg-row { display: flex; align-items: flex-end; gap: 8px; opacity: 0; animation: fadeUp 0.3s forwards; }
-        .msg-row.user { flex-direction: row-reverse; }
-
-        .msg-bubble {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-size: 15px;
-            line-height: 1.5;
-            position: relative;
-            word-wrap: break-word;
-        }
-
-        .msg-row.bot .msg-bubble {
-            background: white;
-            color: var(--text-dark);
-            border-bottom-left-radius: 4px;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-        [data-theme="dark"] .msg-row.bot .msg-bubble { background: #1e293b; border-color: rgba(255,255,255,0.1); }
-
-        .msg-row.user .msg-bubble {
-            background: linear-gradient(135deg, var(--ambedkar-blue), var(--ambedkar-light));
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .msg-time { font-size: 10px; opacity: 0.7; margin-top: 4px; text-align: right; display: block; }
-
-        /* --- FOOTER --- */
-        .chat-footer {
-            padding: 15px;
-            background: rgba(255,255,255,0.6);
-            border-top: 1px solid rgba(0,0,0,0.05);
-            flex-shrink: 0;
-        }
-        [data-theme="dark"] .chat-footer { background: rgba(15, 23, 42, 0.6); }
-
-        .input-group-custom {
-            background: white;
-            border-radius: 24px;
-            padding: 6px;
-            display: flex;
-            align-items: flex-end;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border: 2px solid transparent;
-        }
-        [data-theme="dark"] .input-group-custom { background: #1e293b; }
-        
-        textarea {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 12px;
-            max-height: 120px;
-            resize: none;
-            outline: none;
-            color: var(--text-dark);
-            font-size: 15px;
-        }
-
-        .action-icon {
-            width: 44px; height: 44px; border-radius: 50%; border: none; background: transparent; color: #94a3b8; cursor: pointer; transition: 0.2s;
-        }
-        .action-icon:hover { background: #f1f5f9; color: var(--ambedkar-blue); }
-        .send-btn { background: var(--ambedkar-blue); color: white !important; margin-left: 6px; }
-        .send-btn:hover { background: var(--premium-gold); }
-
-        /* Animation */
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    </style>
-</head>
-<body data-theme="light">
-
-    <button id="ai-trigger-btn">
-        <i class="fas fa-robot"></i>
-    </button>
-
-    <div id="chat-card">
-        <div class="chat-header">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="d-flex align-items-center gap-3">
-                    <div style="width: 42px; height: 42px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <div>
-                        <h5 class="m-0 fw-bold" style="font-size: 17px;">Ambedkar AI</h5>
-                        <small style="opacity: 0.9; font-size: 11px;">● Online • Sangvi</small>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <button class="h-btn" id="sound-btn" onclick="toggleSound()" title="Voice Output">
-                        <i class="fas fa-volume-mute"></i>
-                    </button>
-                    <button class="h-btn" onclick="toggleTheme()" title="Dark Mode">
-                        <i class="fas fa-adjust"></i>
-                    </button>
-                    <button class="h-btn" onclick="toggleChat()" title="Close">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="lang-tabs">
-                <button class="lang-tab active" onclick="setLanguage('en')">English</button>
-                <button class="lang-tab" onclick="setLanguage('kn')">ಕನ್ನಡ</button>
-                <button class="lang-tab" onclick="setLanguage('hi')">हिंदी</button>
-            </div>
-        </div>
-
-        <div class="chat-body" id="messages-area">
-            <div class="msg-row bot">
-                <div class="msg-bubble">
-                    <strong>Jai Bhim! 🙏</strong><br>
-                    Welcome to Dr. Ambedkar Bhavan AI Assistant. How can I help you?
-                    <span class="msg-time">Just now</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="chat-footer">
-            <div class="input-group-custom">
-                <button class="action-icon" id="mic-btn" onclick="toggleMic()">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <textarea id="chat-input" rows="1" placeholder="Type your message..." oninput="autoResize(this)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault(); sendMessage();}"></textarea>
-                <button class="action-icon send-btn" onclick="sendMessage()">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        /* --- CONFIGURATION --- */
-        const CONFIG = {
-            apiUrl: 'https://ai-chatbotbackend-dszv.onrender.com/chat',
-            lang: 'en',
-            sound: false
-        };
-
-        const els = {
-            btn: document.getElementById('ai-trigger-btn'),
-            card: document.getElementById('chat-card'),
-            msgs: document.getElementById('messages-area'),
-            input: document.getElementById('chat-input'),
-            micBtn: document.getElementById('mic-btn'),
-            soundBtn: document.getElementById('sound-btn')
-        };
-
-        let recognition;
-        let synth = window.speechSynthesis;
-
-        /* --- DRAG LOGIC (Works on Mobile & PC) --- */
-        function makeDraggable(element) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            let isDragging = false;
-            let hasMoved = false;
-
-            element.onmousedown = dragStart;
-            element.ontouchstart = dragStart;
-
-            function dragStart(e) {
-                e = e || window.event;
-                // Get initial pos
-                const clientX = e.clientX || e.touches[0].clientX;
-                const clientY = e.clientY || e.touches[0].clientY;
-                pos3 = clientX;
-                pos4 = clientY;
-                hasMoved = false;
-
-                document.onmouseup = dragEnd;
-                document.onmousemove = dragMove;
-                document.ontouchend = dragEnd;
-                document.ontouchmove = dragMove;
-            }
-
-            function dragMove(e) {
-                e = e || window.event;
-                const clientX = e.clientX || e.touches[0].clientX;
-                const clientY = e.clientY || e.touches[0].clientY;
-                
-                pos1 = pos3 - clientX;
-                pos2 = pos4 - clientY;
-                pos3 = clientX;
-                pos4 = clientY;
-
-                // Threshold to detect drag vs click
-                if (Math.abs(pos1) > 2 || Math.abs(pos2) > 2) { hasMoved = true; }
-
-                let newTop = (element.offsetTop - pos2);
-                let newLeft = (element.offsetLeft - pos1);
-
-                // Keep inside screen
-                const maxX = window.innerWidth - element.offsetWidth;
-                const maxY = window.innerHeight - element.offsetHeight;
-                
-                element.style.top = Math.max(0, Math.min(newTop, maxY)) + "px";
-                element.style.left = Math.max(0, Math.min(newLeft, maxX)) + "px";
-                element.style.bottom = 'auto'; 
-                element.style.right = 'auto';
-            }
-
-            function dragEnd() {
-                document.onmouseup = null; document.onmousemove = null;
-                document.ontouchend = null; document.ontouchmove = null;
-                if (!hasMoved) toggleChat();
-            }
-        }
-        makeDraggable(els.btn);
-
-        /* --- CHAT FUNCTIONS --- */
-        function toggleChat() {
-            els.card.classList.toggle('open');
-            // On mobile, if chat opens, hide button via CSS logic (see styles)
-            if(els.card.classList.contains('open')) els.input.focus();
-        }
-
-        function toggleTheme() {
-            const b = document.body;
-            b.setAttribute('data-theme', b.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
-        }
-
-        function setLanguage(l) {
-            CONFIG.lang = l;
-            document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            els.input.placeholder = l === 'en' ? 'Type message...' : (l === 'kn' ? 'ಸಂದೇಶ ಟೈಪ್ ಮಾಡಿ...' : 'संदेश लिखें...');
-        }
-
-        function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
-
-        /* --- MESSAGING --- */
-        async function sendMessage() {
-            const txt = els.input.value.trim();
-            if(!txt) return;
-
-            addMsg(txt, 'user');
-            els.input.value = '';
-            els.input.style.height = 'auto';
-            synth.cancel();
-
-            const loadId = showLoading();
-
-            try {
-                const res = await fetch(CONFIG.apiUrl, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ message: txt, language: CONFIG.lang })
-                });
-                
-                document.getElementById(loadId).remove();
-                const data = await res.json();
-                const reply = data.reply || data.text || "Sorry, connection error.";
-                
-                addMsg(reply, 'bot');
-                if(CONFIG.sound) speak(reply);
-
-            } catch(e) {
-                document.getElementById(loadId).remove();
-                addMsg("⚠️ Server not responding.", 'bot');
-            }
-        }
-
-        function addMsg(txt, type) {
-            const div = document.createElement('div');
-            div.className = `msg-row ${type}`;
-            const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            const content = type === 'bot' ? marked.parse(txt) : txt.replace(/\n/g, '<br>');
-            
-            div.innerHTML = `
-                <div class="msg-bubble">
-                    ${content}
-                    <span class="msg-time">${time}</span>
-                </div>`;
-            els.msgs.appendChild(div);
-            els.msgs.scrollTop = els.msgs.scrollHeight;
-        }
-
-        function showLoading() {
-            const id = 'loader-' + Date.now();
-            els.msgs.innerHTML += `<div id="${id}" class="msg-row bot"><div class="msg-bubble"><i class="fas fa-circle-notch fa-spin"></i> ...</div></div>`;
-            els.msgs.scrollTop = els.msgs.scrollHeight;
-            return id;
-        }
-
-        /* --- AUDIO --- */
-        function toggleSound() {
-            CONFIG.sound = !CONFIG.sound;
-            const icon = els.soundBtn.querySelector('i');
-            if(CONFIG.sound) {
-                icon.className = 'fas fa-volume-up';
-                els.soundBtn.classList.add('active-voice');
-                speak(""); // Wake up mobile audio
-            } else {
-                icon.className = 'fas fa-volume-mute';
-                els.soundBtn.classList.remove('active-voice');
-                synth.cancel();
-            }
-        }
-
-        function speak(text) {
-            if(!window.speechSynthesis) return;
-            const clean = text.replace(/[*#_`]/g, '').replace(/<[^>]*>/g, '');
-            const utter = new SpeechSynthesisUtterance(clean);
-            const voices = synth.getVoices();
-            const langCode = CONFIG.lang === 'kn' ? 'kn-IN' : (CONFIG.lang === 'hi' ? 'hi-IN' : 'en-IN');
-            utter.voice = voices.find(v => v.lang.includes(langCode)) || voices[0];
-            synth.speak(utter);
-        }
-
-        function toggleMic() {
-            if(!window.webkitSpeechRecognition) { alert("Please use Chrome or Edge for voice input."); return; }
-            if(!recognition) {
-                recognition = new webkitSpeechRecognition();
-                recognition.continuous = false;
-                recognition.onstart = () => { els.micBtn.style.color = '#ef4444'; els.input.placeholder = "Listening..."; };
-                recognition.onend = () => { els.micBtn.style.color = ''; els.input.placeholder = "Type message..."; };
-                recognition.onresult = (e) => { els.input.value = e.results[0][0].transcript; sendMessage(); };
-            }
-            recognition.lang = CONFIG.lang === 'kn' ? 'kn-IN' : (CONFIG.lang === 'hi' ? 'hi-IN' : 'en-IN');
-            recognition.start();
-        }
-    </script>
-</body>
-</html>
-  
 </body>
 </html>
